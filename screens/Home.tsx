@@ -3,6 +3,7 @@ import { StyleSheet, Image, TouchableOpacity, ImageProps } from 'react-native';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from '../components/Themed';
+import EventCard from '../components/EventCard';
 
 import masp from '../assets/images/mask.png'
 import mercadola from '../assets/images/mercadola.jpg'
@@ -14,7 +15,10 @@ interface Event {
     address: string,
     date: string,
     distance: string,
-    image: ImageProps
+    image: ImageProps,
+    description: string,
+    confirmed: number // tem q trocar isso depois
+
 }
 
 const events: Event[] = [
@@ -24,7 +28,9 @@ const events: Event[] = [
         address: 'Av. Paulista, 1000',
         date: '29 fev',
         distance: '12 km',
-        image: masp
+        image: masp,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
+        confirmed: 23
     },
     {
         name: 'Exposição Y',
@@ -32,7 +38,9 @@ const events: Event[] = [
         address: 'Av. Sé, 500',
         date: '10 mar',
         distance: '8 km',
-        image: lugar
+        image: lugar,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
+        confirmed: 10
     },
     {
         name: 'Exposição X',
@@ -40,68 +48,57 @@ const events: Event[] = [
         address: 'Av. Mercado, 99',
         date: '25 dez',
         distance: '36 km',
-        image: mercadola
+        image: mercadola,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
+        confirmed: 28
     }
 ]
 
-export default function Home() {
+export default function Home(props: any) {
+
     const [currentEvent, setCurrentEvent] = React.useState<Event>(events[0])
     const [currentIndex, setCurrentIndex] = React.useState(0)
 
     function handleSwitchEvent() {
-        setCurrentEvent(events[(currentIndex+1) % events.length])
-        setCurrentIndex((currentIndex+1) % events.length)
+        setCurrentEvent(events[(currentIndex + 1) % events.length])
+        setCurrentIndex((currentIndex + 1) % events.length)
+    }
+
+    function handleConfirmEvent() {
+        props.navigation.navigate('Evento', { event: currentEvent });
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Entypo name="menu" size={48} style={styles.menuIcon}/>
+                <Entypo name="menu" size={48} style={styles.menuIcon} />
                 <Text style={styles.logoTitle}>MeeTour</Text>
             </View>
-            <View style={styles.infoContainer}>
-                <View style={styles.eventInfo}>
-                    <View>
-                        <Image source={currentEvent.image} style={styles.image} /> 
-                    </View>
-                    <View style={styles.eventTitleContainer}>
-                        <Text style={styles.eventTitle}>{currentEvent.name}</Text>
-                    </View>
-                    <View style={styles.locationContainer}> 
-                        <Text style={styles.locationName}>{currentEvent.location}</Text>
-                        <Text style={styles.distanceText}>{currentEvent.distance}</Text>
-                    </View>
-                    <View style={styles.locationContainer}>
-                        <View style={styles.addressContainer}>
-                            <Ionicons name="location-sharp" size={24} color="black" style={{ marginRight: 4}} />
-                            <Text>{currentEvent.address}</Text>
-                        </View>
-                        <Text>{currentEvent.date}</Text>
-                    </View>
-                </View>
-            </View>
+
+            <EventCard event={currentEvent} />
+
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={[styles.button, styles.rejectButton]} onPress={handleSwitchEvent}>
-                <AntDesign name="close" size={48} color="black" />
+                    <AntDesign name="close" size={48} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.acceptButton]}>
-                <LinearGradient
-                    colors={['#6951FF', '#8A94F0']}
-                    style={{
-                    flex: 1,
-                    position: 'absolute',
-                    left: 0,
-                    width: 120,
-                    height: 120,
-                    borderRadius: 100,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginRight: -40,
-                    paddingRight: 25,
-                    }}
-                >
-                    <Ionicons name="arrow-forward" size={48} color="white" />
-                </LinearGradient>
+                <TouchableOpacity style={[styles.button, styles.acceptButton]} onPress={handleConfirmEvent}>
+                    <LinearGradient
+                        colors={['#6951FF', '#8A94F0']}
+                        style={{
+                            flex: 1,
+                            position: 'absolute',
+                            left: 0,
+                            width: 120,
+                            height: 120,
+                            borderRadius: 100,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: -40,
+                            paddingRight: 25,
+                        }}
+                    >
+                        <Ionicons name="arrow-forward" size={48} color="white" />
+                    </LinearGradient>
                 </TouchableOpacity>
             </View>
         </View>
@@ -130,50 +127,8 @@ const styles = StyleSheet.create({
         color: '#6951FF',
         fontWeight: 'bold',
     },
-    infoContainer: {
-        marginBottom: 100
-    },
-    eventInfo: {
-        marginHorizontal: 10,
-        marginVertical: 5,
-        paddingHorizontal: 10,
-        padding: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        borderRadius: 10
-    },
-    locationContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 10
-    },
-    addressContainer: {
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    locationName: {
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    eventTitleContainer: {
-        marginVertical: 20
-    },
-    eventTitle: {
-      fontSize: 28,
-      fontWeight: 'bold',
-    },
-    image: {
-      width: '100%',
-      height: 200
-    },
     buttonsContainer: {
+        marginTop: 80,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
@@ -199,10 +154,5 @@ const styles = StyleSheet.create({
     acceptButton: {
         marginRight: -40,
         paddingRight: 25,
-    },
-    distanceText: {
-        color: '#6951FF',
-        fontWeight: 'bold'
     }
-  });
-  
+});

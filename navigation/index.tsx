@@ -16,16 +16,32 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import Home from '../screens/Home';
+import Event from '../screens/Event'
+
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+      /* linking={LinkingConfiguration}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme} */>
+      {/* <RootNavigator /> */}
+      <EventTabStack/>
     </NavigationContainer>
+  );
+}
+
+const EventStack = createStackNavigator();
+
+function EventTabStack() {
+  return (
+    <EventStack.Navigator>
+      <EventStack.Screen name="Home" component={Home} />
+      <EventStack.Screen name="Evento" component={Event} />
+    </EventStack.Navigator>
   );
 }
 
