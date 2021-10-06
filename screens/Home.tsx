@@ -108,7 +108,8 @@ export default function Home(props: any) {
 const styles = StyleSheet.create({
     container: {
         overflow: 'hidden',
-        flex: 1
+        flex: 1,
+        backgroundColor: '#fff'
     },
     header: {
         height: 50,
