@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Image, TouchableOpacity, ImageProps } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'react-native';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from '../components/Themed';
@@ -69,7 +69,7 @@ export default function Home(props: any) {
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <Entypo name="menu" size={48} style={styles.menuIcon} />
                 <Text style={styles.logoTitle}>MeeTour</Text>
@@ -101,7 +101,7 @@ export default function Home(props: any) {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
