@@ -32,7 +32,6 @@ export default function Event({ route, navigation }) {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                <Entypo name="menu" size={48} style={styles.menuIcon} />
                 <Text style={styles.logoTitle}>MeeTour</Text>
             </View>
 
@@ -104,11 +103,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 15
-    },
-    menuIcon: {
-        color: '#6951FF',
-        position: 'absolute',
-        left: 5
     },
     logoTitle: {
         fontSize: 26,

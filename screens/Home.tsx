@@ -60,18 +60,18 @@ export default function Home(props: any) {
     const [currentIndex, setCurrentIndex] = React.useState(0)
 
     function handleSwitchEvent() {
+        console.warn(props);
         setCurrentEvent(events[(currentIndex + 1) % events.length])
         setCurrentIndex((currentIndex + 1) % events.length)
     }
 
     function handleConfirmEvent() {
-        props.navigation.navigate('Evento', { event: currentEvent });
+        props.navigation.navigate('Event', { event: currentEvent });
     }
 
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                <Entypo name="menu" size={48} style={styles.menuIcon} />
                 <Text style={styles.logoTitle}>MeeTour</Text>
             </View>
 
@@ -117,11 +117,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 15
-    },
-    menuIcon: {
-        color: '#6951FF',
-        position: 'absolute',
-        left: 5
     },
     logoTitle: {
         fontSize: 26,
