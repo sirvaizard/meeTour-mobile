@@ -13,6 +13,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import Home from '../screens/Home';
 import Event from '../screens/Event'
 import Agenda from '../screens/Agenda'
+import Profile from '../screens/Profile'
 
 import {RootTabParamList, RootTabScreenProps } from '../types';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -71,7 +72,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Perfil"
-        component={Agenda}
+        component={Profile}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
