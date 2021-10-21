@@ -4,6 +4,9 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from '../components/Themed';
 import EventCard from '../components/EventCard';
+import { RFPercentage } from "react-native-responsive-fontsize";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 import masp from '../assets/images/mask.png'
 import mercadola from '../assets/images/mercadola.jpg'
@@ -70,7 +73,7 @@ export default function Home(props: any) {
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.logoTitle}>MeeTour</Text>
             </View>
@@ -101,15 +104,15 @@ export default function Home(props: any) {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        overflow: 'hidden',
-        flex: 1,
-        backgroundColor: '#fff'
+        height: hp('100%'),
+        backgroundColor: '#fff',
+        position: 'relative'
     },
     header: {
         height: 50,
@@ -124,7 +127,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonsContainer: {
-        marginTop: 80,
+        position: 'absolute',
+        bottom: 70,
+        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
