@@ -23,7 +23,6 @@ import { FontDisplay } from 'expo-font';
 export default function Navigation() {
   return (
     <NavigationContainer>
-      {/* <EventTabStack/> */}
       <BottomTabNavigator/>
     </NavigationContainer>
   );
@@ -34,8 +33,20 @@ const EventStack = createStackNavigator();
 function EventTabStack() {
   return (
     <EventStack.Navigator>
-      {/* <EventStack.Screen name="Home" component={Home} /> */}
-      <EventStack.Screen name="Evento" component={Event} />
+      <EventStack.Screen
+        name="Home"
+        component={Home}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
+      <EventStack.Screen
+        name="Event"
+        component={Event}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
     </EventStack.Navigator>
   );
 }
@@ -56,7 +67,7 @@ function BottomTabNavigator() {
       }}>
       <BottomTab.Screen
         name="Home"
-        component={Home}
+        component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
