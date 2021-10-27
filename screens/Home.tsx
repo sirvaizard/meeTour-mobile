@@ -4,6 +4,9 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from '../components/Themed';
 import EventCard from '../components/EventCard';
+import { RFPercentage } from "react-native-responsive-fontsize";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 import masp from '../assets/images/mask.png'
 import mercadola from '../assets/images/mercadola.jpg'
@@ -60,18 +63,18 @@ export default function Home(props: any) {
     const [currentIndex, setCurrentIndex] = React.useState(0)
 
     function handleSwitchEvent() {
+        console.warn(props);
         setCurrentEvent(events[(currentIndex + 1) % events.length])
         setCurrentIndex((currentIndex + 1) % events.length)
     }
 
     function handleConfirmEvent() {
-        props.navigation.navigate('Evento', { event: currentEvent });
+        props.navigation.navigate('Event', { event: currentEvent });
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.header}>
-                <Entypo name="menu" size={48} style={styles.menuIcon} />
                 <Text style={styles.logoTitle}>MeeTour</Text>
             </View>
 
@@ -101,15 +104,15 @@ export default function Home(props: any) {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        overflow: 'hidden',
-        flex: 1,
-        backgroundColor: '#fff'
+        height: hp('100%'),
+        backgroundColor: '#fff',
+        position: 'relative'
     },
     header: {
         height: 50,
@@ -118,18 +121,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 15
     },
-    menuIcon: {
-        color: '#6951FF',
-        position: 'absolute',
-        left: 5
-    },
     logoTitle: {
         fontSize: 26,
         color: '#6951FF',
         fontWeight: 'bold',
     },
     buttonsContainer: {
-        marginTop: 80,
+        position: 'absolute',
+        bottom: 70,
+        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between'
     },

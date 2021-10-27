@@ -2,6 +2,7 @@ import { StyleSheet, Image, ImageProps } from 'react-native';
 import { Text, View } from '../components/Themed';
 import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 export interface Props {
     event: Event,
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     locationContainer: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 10
@@ -48,14 +49,16 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     locationName: {
-        fontSize: 18,
+        // fontSize: 18,
+        fontSize: RFPercentage(2.5),
         fontWeight: 'bold'
     },
     eventTitleContainer: {
         marginVertical: 20
     },
     eventTitle: {
-        fontSize: 28,
+        // fontSize: 28,
+        fontSize: RFPercentage(4),
         fontWeight: 'bold',
     },
     image: {
