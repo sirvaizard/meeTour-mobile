@@ -12,6 +12,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import Home from '../screens/Home';
 import Event from '../screens/Event'
+import Agenda from '../screens/Agenda'
+import Profile from '../screens/Profile'
 
 import {RootTabParamList, RootTabScreenProps } from '../types';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -61,14 +63,21 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Event"
-        component={Event}
+        name="Agenda"
+        component={Agenda}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
-      <EventStack.Screen name="Evento" component={Event} />
+      <BottomTab.Screen
+        name="Perfil"
+        component={Profile}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
