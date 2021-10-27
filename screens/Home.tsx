@@ -6,6 +6,7 @@ import { Text, View } from '../components/Themed';
 import EventCard from '../components/EventCard';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Header from '../components/Header';
 
 
 import masp from '../assets/images/mask.png'
@@ -20,8 +21,7 @@ interface Event {
     distance: string,
     image: ImageProps,
     description: string,
-    confirmed: number // tem q trocar isso depois
-
+    confirmed: number // tem q trocar isso depois pra um obj/array com todos os confirmados
 }
 
 const events: Event[] = [
@@ -74,9 +74,8 @@ export default function Home(props: any) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.logoTitle}>MeeTour</Text>
-            </View>
+            
+            <Header />
 
             <EventCard event={currentEvent} />
 
@@ -91,13 +90,13 @@ export default function Home(props: any) {
                             flex: 1,
                             position: 'absolute',
                             left: 0,
-                            width: 120,
-                            height: 120,
+                            width: hp('18%'),
+                            height: hp('18%'),
                             borderRadius: 100,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            marginRight: -40,
-                            paddingRight: 25,
+                            marginRight: -hp('5%'),
+                            paddingRight: hp('4%'),
                         }}
                     >
                         <Ionicons name="arrow-forward" size={48} color="white" />
@@ -114,21 +113,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         position: 'relative'
     },
-    header: {
-        height: 50,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 15
-    },
-    logoTitle: {
-        fontSize: 26,
-        color: '#6951FF',
-        fontWeight: 'bold',
-    },
     buttonsContainer: {
         position: 'absolute',
-        bottom: 70,
+        bottom: hp('12%'),
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -142,18 +129,19 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        width: 120,
-        height: 120,
+        width: hp('18%'),
+        height: hp('18%'),
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center'
     },
     rejectButton: {
-        marginLeft: -40,
-        paddingLeft: 25
+        marginLeft: -hp('5%'),
+        paddingLeft: hp('4%'),
+        paddingTop: hp('1.1%')
     },
     acceptButton: {
-        marginRight: -40,
-        paddingRight: 25,
+        marginRight: -hp('5%'),
+        paddingRight: hp('4%'),
     }
 });

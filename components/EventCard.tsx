@@ -3,6 +3,7 @@ import { Text, View } from '../components/Themed';
 import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { RFPercentage } from "react-native-responsive-fontsize";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export interface Props {
     event: Event,
@@ -20,14 +21,10 @@ interface Event {
 }
 
 const styles = StyleSheet.create({
-    infoContainer: {
-        marginBottom: 20
-    },
     eventInfo: {
-        marginHorizontal: 10,
-        marginVertical: 5,
-        paddingHorizontal: 10,
-        padding: 10,
+        marginHorizontal: wp('3%'),
+        paddingHorizontal: wp('2%'),
+        padding: wp('2%'),
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -39,31 +36,28 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     locationContainer: {
-        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 10
+        marginBottom: hp('1%')
     },
     addressContainer: {
         flexDirection: 'row',
         alignItems: 'center'
     },
     locationName: {
-        // fontSize: 18,
         fontSize: RFPercentage(2.5),
         fontWeight: 'bold'
     },
     eventTitleContainer: {
-        marginVertical: 20
+        marginVertical: hp('2.5%')
     },
     eventTitle: {
-        // fontSize: 28,
-        fontSize: RFPercentage(4),
+        fontSize: RFPercentage(3.5),
         fontWeight: 'bold',
     },
     image: {
         width: '100%',
-        height: 200
+        height: hp('30%')
     },
     distanceText: {
         color: '#6951FF',
@@ -75,7 +69,7 @@ export default function EventCard(props: Props) {
 
     return (
         <>
-            <View style={styles.infoContainer}>
+            <View >
                 <View style={styles.eventInfo}>
                     <View>
                         <Image source={props.event.image} style={styles.image} />
