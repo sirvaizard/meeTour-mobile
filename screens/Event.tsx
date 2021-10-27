@@ -3,9 +3,11 @@ import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'rea
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from '../components/Themed';
+import { RFPercentage } from "react-native-responsive-fontsize";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import EventCard from '../components/EventCard';
-
+import Header from '../components/Header';
 import pinguins from '../assets/images/pinguins.jpg';
 
 let placeImages: ImageProps[] = [pinguins, pinguins, pinguins];
@@ -31,9 +33,8 @@ export default function Event({ route, navigation }) {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.logoTitle}>MeeTour</Text>
-            </View>
+
+            <Header />
 
             <EventCard event={route.params.event} />
 
@@ -74,8 +75,8 @@ export default function Event({ route, navigation }) {
                     <LinearGradient
                         colors={['#6951FF', '#8A94F0']}
                         style={{
-                            width: 80,
-                            height: 80,
+                            width: wp('25%'),
+                            height: wp('25%'),
                             borderRadius: 100,
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -94,29 +95,17 @@ export default function Event({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         overflow: 'hidden',
-        flex: 1,
         backgroundColor: '#fff'
-    },
-    header: {
-        height: 50,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 15
-    },
-    logoTitle: {
-        fontSize: 26,
-        color: '#6951FF',
-        fontWeight: 'bold',
     },
     confirmedPeopleBtn: {
         display: 'flex',
         margin: 'auto',
-        marginHorizontal: 10,
+        marginHorizontal: wp('3%'),
         borderRadius: 15,
-        marginBottom: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
+        marginTop: hp('2%'),
+        marginBottom: hp('2%'),
+        paddingVertical: hp('2.5%'),
+        paddingHorizontal: wp('5%'),
 
         shadowColor: "#000",
         shadowOffset: {
@@ -131,7 +120,7 @@ const styles = StyleSheet.create({
     confirmedPeopleBtnNumber: {
         display: 'flex',
         alignItems: 'center',
-        fontSize: 23,
+        fontSize: RFPercentage(4),
         fontWeight: 'bold',
 
     },
@@ -140,18 +129,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: 18
+        fontSize: RFPercentage(2)
     },
     descriptionContainer: {
         display: 'flex',
-        marginHorizontal: 25,
-        marginVertical: 15,
-        fontSize: 16
+        marginHorizontal: wp('6%'),
+        marginVertical: hp('2%'),
+        fontSize: RFPercentage(2)
 
     },
     descriptionTitle: {
         color: '#6951FF',
-        fontSize: 17,
+        fontSize: RFPercentage(3),
         marginBottom: 3
     },
     placeImagesSection: {
@@ -170,10 +159,10 @@ const styles = StyleSheet.create({
 
     },
     placeImagesSectionTitle: {
-        fontSize: 17,
+        fontSize: RFPercentage(3),
         color: '#6951FF',
         alignSelf: 'flex-start',
-        marginBottom: 3
+        marginBottom: 4
     },
     placeImagesSectionBottom: {
         display: 'flex',
@@ -189,29 +178,29 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: wp('3%'),
     },
     placeImage: {
-        width: 120,
-        height: 120,
-        margin: 2
+        width: wp('28%'),
+        height: wp('28%'),
+        margin: wp('.8%')
     },
     buttonsContainer: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: 250,
-        marginHorizontal: 'auto',
-        marginTop: 15,
-        marginBottom: 50
+        width: wp('70%'),
+        marginLeft: wp('15%'),
+        marginTop: hp('4%'),
+        marginBottom: hp('8%')
     },
     btnCircle: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 80,
-        height: 80,
+        width: wp('25%'),
+        height: wp('25%'),
         borderRadius: 100,
         shadowColor: "#000",
         shadowOffset: {
