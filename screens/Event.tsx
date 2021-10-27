@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginVertical: 15,
         padding: 10,
+        borderRadius: 15,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -162,7 +163,8 @@ const styles = StyleSheet.create({
         fontSize: RFPercentage(3),
         color: '#6951FF',
         alignSelf: 'flex-start',
-        marginBottom: 4
+        marginBottom: 4,
+        paddingLeft: wp('1%')
     },
     placeImagesSectionBottom: {
         display: 'flex',

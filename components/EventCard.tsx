@@ -38,18 +38,20 @@ const styles = StyleSheet.create({
     locationContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: hp('1%')
+        marginBottom: hp('1%'),
+        paddingHorizontal: wp('3%')
     },
     addressContainer: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     locationName: {
         fontSize: RFPercentage(2.5),
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     eventTitleContainer: {
-        marginVertical: hp('2.5%')
+        marginVertical: hp('2.5%'),
+        paddingHorizontal: wp('3%')
     },
     eventTitle: {
         fontSize: RFPercentage(3.5),
