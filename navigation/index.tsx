@@ -10,6 +10,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import Login from '../screens/Login';
+import SignIn from '../screens/SignIn';
 import Home from '../screens/Home';
 import Event from '../screens/Event'
 import Agenda from '../screens/Agenda'
@@ -23,8 +25,38 @@ import { FontDisplay } from 'expo-font';
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <BottomTabNavigator/>
+      <MainNavStack />
     </NavigationContainer>
+  );
+}
+
+const MainNav = createStackNavigator();
+
+function MainNavStack() {
+  return (
+    <MainNav.Navigator>
+      <MainNav.Screen
+        name="Login"
+        component={Login}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
+      <MainNav.Screen
+        name="SignIn"
+        component={SignIn}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
+      <MainNav.Screen
+        name="BottomTabNav"
+        component={BottomTabNavigator}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
+    </MainNav.Navigator>
   );
 }
 
@@ -66,11 +98,11 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Home"
+        name="EventStack"
         component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         })}
       />
       <BottomTab.Screen

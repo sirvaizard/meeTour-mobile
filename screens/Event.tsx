@@ -25,6 +25,7 @@ export default function Event({ route, navigation }) {
 
     function handleConfirmBtn() {
         console.log("Navigate to schedule screen");
+        navigation.navigate('Agenda');
     }
 
     function handleSeeAllImages() {
