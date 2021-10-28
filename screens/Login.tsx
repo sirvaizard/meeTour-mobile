@@ -6,23 +6,29 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Constants from 'expo-constants';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Logo from '../assets/images/logo_signin.png'
+import Logo from '../assets/images/logo_signin.png';
+import api from "../services/api";
 
-export default function Agenda({ navigation }: { navigation: any }) {
+export default function Login({ navigation }: { navigation: any }) {
 
-    const { register, setValue, handleSubmit, control, reset, formState: { errors: any } } = useForm();
+    const { handleSubmit, control, formState: { errors } } = useForm({mode: 'onBlur'});
 
-    function handleSignInBtn(){
+    function handleSignInBtn() {
         navigation.navigate('SignIn');
     }
 
-    function onSubmit(data) {
-        console.log(data);
-        navigation.navigate('BottomTabNav');
-    }
+    async function onSubmit(data: { email: string, password: string }) {
+        
+        await api.post("/token", 
+            {
+                email: data.email,
+                password: data.password 
+            }
+        )
+        .then(response => {console.log(response), navigation.navigate('BottomTabNav')})
+        .catch(err => console.log(err))
 
-    function onError(errors, e) {
-        return console.log(errors);
+        // navigation.navigate('BottomTabNav')
     }
 
     return (
@@ -46,8 +52,16 @@ export default function Agenda({ navigation }: { navigation: any }) {
                     />
                 )}
                 name="email"
-                rules={{ required: true }}
+                rules={{ 
+                    required: { value: true, message: "Insira um e-mail válido" },
+                    minLength: {
+                        value: 8,
+                        message: 'Insira um e-mail válido'
+                    }
+                }}
             />
+
+            {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
 
             <Controller
                 control={control}
@@ -62,8 +76,16 @@ export default function Agenda({ navigation }: { navigation: any }) {
                     />
                 )}
                 name="password"
-                rules={{ required: true }}
+                rules={{ 
+                    required: { value: true, message: "Insira sua senha" },
+                    minLength: {
+                        value: 8,
+                        message: 'Insira sua senha (mín 8 caracteres)'
+                    }
+                }}
             />
+
+            {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
                 <LinearGradient
@@ -101,21 +123,27 @@ export default function Agenda({ navigation }: { navigation: any }) {
                 </LinearGradient>
             </TouchableOpacity>
 
+
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     logo: {
-        height: 50,
-        resizeMode: 'contain',
+        height: 45,
+        width: wp('50%'),
+        marginLeft: wp('20%'),
+        // resizeMode: 'contain',
         marginBottom: 20
     },
     label: {
-        marginHorizontal: 'auto',
+        marginLeft: 10,
         marginTop: 30,
         marginBottom: 10,
         fontStyle: 'italic'
+    },
+    error: {
+        color: 'red'
     },
     button: {
         marginTop: 8,

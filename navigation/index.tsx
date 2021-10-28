@@ -17,7 +17,7 @@ import Event from '../screens/Event'
 import Agenda from '../screens/Agenda'
 import Profile from '../screens/Profile'
 
-import {RootTabParamList, RootTabScreenProps } from '../types';
+import { RootTabParamList, RootTabScreenProps } from '../types';
 import { createStackNavigator } from '@react-navigation/stack';
 import { FontDisplay } from 'expo-font';
 
