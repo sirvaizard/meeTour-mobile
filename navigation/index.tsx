@@ -6,10 +6,11 @@
 import * as React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+
 import Login from '../screens/Login';
 import SignIn from '../screens/SignIn';
 import Home from '../screens/Home';
@@ -17,16 +18,25 @@ import Event from '../screens/Event'
 import Agenda from '../screens/Agenda'
 import Profile from '../screens/Profile'
 
-import { RootTabParamList, RootTabScreenProps } from '../types';
-import { createStackNavigator } from '@react-navigation/stack';
-import { FontDisplay } from 'expo-font';
+import { CredentialsContext } from '../components/CredentialsContext';
+
 
 
 export default function Navigation() {
   return (
-    <NavigationContainer>
-      <MainNavStack />
-    </NavigationContainer>
+
+    <CredentialsContext.Consumer>
+
+      {
+        ({ storedCredentials }) => (
+          <NavigationContainer>
+            <MainNavStack />
+          </NavigationContainer>
+        )
+      }
+
+    </CredentialsContext.Consumer>
+
   );
 }
 
