@@ -12,8 +12,6 @@ export default function App() {
   const [appReady, setAppReady] = useState(false);
   const [storedCredentials, setStoredCredentials] = useState('');
 
-
-
   function checkStoredCredentials(){
     AsyncStorage.getItem('meeTourCredentials')
       .then(res => {

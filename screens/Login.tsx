@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { StyleSheet, TextInput, Alert, TouchableOpacity, Image, ImageProps } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { useForm, Controller } from 'react-hook-form';
@@ -9,12 +9,26 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import Logo from '../assets/images/logo_signin.png';
 import api from "../services/api";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CredentialsContext } from '../components/CredentialsContext';
+
 export default function Login({ navigation }: { navigation: any }) {
 
     const { handleSubmit, control, formState: { errors } } = useForm({mode: 'onBlur'});
+    const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
 
     function handleSignInBtn() {
         navigation.navigate('SignIn');
+    }
+
+    function persistLogin(credentials: any){
+
+        AsyncStorage.setItem('meeTourCredentials', JSON.stringify(credentials))
+            .then(() => {
+                setStoredCredentials(credentials);
+            })
+            .catch(err => console.log(err));
+
     }
 
     async function onSubmit(data: { email: string, password: string }) {
@@ -25,7 +39,11 @@ export default function Login({ navigation }: { navigation: any }) {
                 password: data.password 
             }
         )
-        .then(response => {console.log(response), navigation.navigate('BottomTabNav')})
+        .then(response => {
+            console.log(response);
+            persistLogin(response.data);
+            navigation.navigate('BottomTabNav');
+        })
         .catch(err => console.log(err))
 
         // navigation.navigate('BottomTabNav')
@@ -79,8 +97,8 @@ export default function Login({ navigation }: { navigation: any }) {
                 rules={{ 
                     required: { value: true, message: "Insira sua senha" },
                     minLength: {
-                        value: 8,
-                        message: 'Insira sua senha (mín 8 caracteres)'
+                        value: 6,
+                        message: 'Insira sua senha (mín 6 caracteres)'
                     }
                 }}
             />

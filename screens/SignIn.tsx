@@ -163,8 +163,8 @@ export default function SignIn({ navigation }: { navigation: any }) {
                 rules={{
                     required: { value: true, message: "Insira uma senha com no mínimo 8 caracteres" },
                     minLength: {
-                        value: 8,
-                        message: 'Insira uma senha com no mínimo 8 caracteres'
+                        value: 6,
+                        message: 'Insira uma senha com no mínimo 6 caracteres'
                     }
                 }}
             />

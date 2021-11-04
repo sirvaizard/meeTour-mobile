@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'react-native';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,10 +8,12 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Header from '../components/Header';
 
+import { CredentialsContext } from '../components/CredentialsContext';
 
 import masp from '../assets/images/mask.png'
 import mercadola from '../assets/images/mercadola.jpg'
 import lugar from '../assets/images/lugar.jpg'
+
 
 interface Event {
     name: string,
@@ -62,8 +64,10 @@ export default function Home(props: any) {
     const [currentEvent, setCurrentEvent] = React.useState<Event>(events[0])
     const [currentIndex, setCurrentIndex] = React.useState(0)
 
+    const {storedCredentials} = useContext(CredentialsContext);
+
     function handleSwitchEvent() {
-        console.warn(props);
+        console.log(storedCredentials);
         setCurrentEvent(events[(currentIndex + 1) % events.length])
         setCurrentIndex((currentIndex + 1) % events.length)
     }

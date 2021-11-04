@@ -27,13 +27,13 @@ export default function Navigation() {
 
     <CredentialsContext.Consumer>
 
-      {
-        ({ storedCredentials }) => (
-          <NavigationContainer>
-            <MainNavStack />
-          </NavigationContainer>
-        )
-      }
+      {({ storedCredentials }) => (
+
+        <NavigationContainer>
+          <MainNavStack />
+        </NavigationContainer>
+
+      )}
 
     </CredentialsContext.Consumer>
 
@@ -44,29 +44,56 @@ const MainNav = createStackNavigator();
 
 function MainNavStack() {
   return (
-    <MainNav.Navigator>
-      <MainNav.Screen
-        name="Login"
-        component={Login}
-        options={({ navigation }) => ({
-          headerShown: false,
-        })}
-      />
-      <MainNav.Screen
-        name="SignIn"
-        component={SignIn}
-        options={({ navigation }) => ({
-          headerShown: false,
-        })}
-      />
-      <MainNav.Screen
-        name="BottomTabNav"
-        component={BottomTabNavigator}
-        options={({ navigation }) => ({
-          headerShown: false,
-        })}
-      />
-    </MainNav.Navigator>
+
+    <CredentialsContext.Consumer>
+
+      {
+        ({ storedCredentials }) => (
+
+          storedCredentials ? (
+
+            <MainNav.Navigator>
+              <MainNav.Screen
+                name="BottomTabNav"
+                component={BottomTabNavigator}
+                options={({ navigation }) => ({
+                  headerShown: false,
+                })}
+              />
+            </MainNav.Navigator>
+
+          ) : (
+
+            <MainNav.Navigator>
+              <MainNav.Screen
+                name="Login"
+                component={Login}
+                options={({ navigation }) => ({
+                  headerShown: false,
+                })}
+              />
+              <MainNav.Screen
+                name="SignIn"
+                component={SignIn}
+                options={({ navigation }) => ({
+                  headerShown: false,
+                })}
+              />
+              <MainNav.Screen
+                name="BottomTabNav"
+                component={BottomTabNavigator}
+                options={({ navigation }) => ({
+                  headerShown: false,
+                })}
+              />
+            </MainNav.Navigator>
+
+          )
+
+        )
+      }
+
+    </CredentialsContext.Consumer>
   );
 }
 
