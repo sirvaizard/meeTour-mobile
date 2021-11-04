@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { StyleSheet, TextInput, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { Text, View } from '../components/Themed';
+import React, { useState } from 'react';
+import { StyleSheet, TextInput, ScrollView, TouchableOpacity, View, Button } from 'react-native';
+import { Text } from '../components/Themed';
 import { useForm, Controller } from 'react-hook-form';
 import { LinearGradient } from 'expo-linear-gradient';
 import Constants from 'expo-constants';
-import { RFPercentage } from "react-native-responsive-fontsize";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Logo from '../assets/images/logo_signin.png';
+import Logo from '../components/Logo';
 import api from "../services/api";
 
 
@@ -14,7 +13,7 @@ export default function SignIn({ navigation }: { navigation: any }) {
 
     const { handleSubmit, control, formState: { errors } } = useForm();
 
-    function handleBtnVoltar(){
+    function handleBtnVoltar() {
         navigation.navigate('Login');
     }
 
@@ -28,16 +27,21 @@ export default function SignIn({ navigation }: { navigation: any }) {
                 password: data.password
             }
         )
-        .then(response => { console.log(response), navigation.navigate('Login') })
-        .catch(err => console.log(err))
+            .then(response => {
+                console.log(response);
+                alert("Conta criada com sucesso!");
+                navigation.navigate('Login');
+            })
+            .catch(err => {
+                console.log(err);
+                alert("Erro interno :/ \nTente novamente mais tarde!");
+            })
     }
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} style={styles.container}>
 
-            <View>
-                <Image source={Logo} style={styles.logo} />
-            </View>
+            <Logo />
 
             <Controller
                 control={control}
@@ -120,7 +124,7 @@ export default function SignIn({ navigation }: { navigation: any }) {
 
             {errors.cpf && <Text style={styles.error}>{errors.cpf.message}</Text>}
 
-            <Controller
+            {/* <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
@@ -143,7 +147,18 @@ export default function SignIn({ navigation }: { navigation: any }) {
                         message: 'Insira uma data no formato dd-mm-aaaa'
                     }
                 }}
-            />
+            /> */}
+
+            {/* <Controller
+                name="birth"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                    <DatePicker
+                        selected={value}
+                        onChange={onChange}
+                    />
+                )}
+            /> */}
 
             {errors.birth && <Text style={styles.error}>{errors.birth.message}</Text>}
 
@@ -189,7 +204,7 @@ export default function SignIn({ navigation }: { navigation: any }) {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.buttonVoltar} onPress={handleBtnVoltar}>
-                <Text>Voltar</Text>
+                <Text style={styles.btnVoltarLabel}>Voltar</Text>
             </TouchableOpacity>
 
         </ScrollView>
@@ -197,14 +212,6 @@ export default function SignIn({ navigation }: { navigation: any }) {
 };
 
 const styles = StyleSheet.create({
-    logo: {
-        height: 45,
-        width: wp('50%'),
-        marginLeft: wp('20%'),
-        // resizeMode: 'contain',
-        marginTop: 20,
-        marginBottom: 20
-    },
     error: {
         color: 'red'
     },
@@ -217,32 +224,34 @@ const styles = StyleSheet.create({
 
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: 3,
+            height: 5,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.15,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 1,
     },
     buttonVoltar: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'white',
         height: 40,
         width: '30%',
         marginTop: hp('5%'),
-        // marginLeft: '35%',
         borderRadius: 4,
 
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: 3,
+            height: 5,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.15,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: .75,
+    },
+    btnVoltarLabel: {
+        color: '#353535',
+        fontWeight: 'bold'
     },
     buttonText: {
         color: 'white',
@@ -258,12 +267,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: 3,
+            height: 5,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.15,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 2,
+
         height: 40,
         padding: 10,
         borderRadius: 8,
