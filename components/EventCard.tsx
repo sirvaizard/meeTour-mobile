@@ -15,7 +15,7 @@ interface Event {
     address: string,
     date: string,
     distance: string,
-    image: ImageProps,
+    image: string,
     description: string,
     confirmed: number
 }
@@ -74,7 +74,7 @@ export default function EventCard(props: Props) {
             <View >
                 <View style={styles.eventInfo}>
                     <View>
-                        <Image source={props.event.image} style={styles.image} />
+                        <Image source={{uri: props.event.image}} style={styles.image} />
                     </View>
                     <View style={styles.eventTitleContainer}>
                         <Text style={styles.eventTitle}>{props.event.name}</Text>
