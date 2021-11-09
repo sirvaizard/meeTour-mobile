@@ -16,7 +16,7 @@ let array: number[] = [1, 2, 3];
 export default function Event({ route, navigation }) {
 
     function handleConfirmedPeopleBtn() {
-        console.log("Navigate to participants screen");
+        // console.log("Navigate to participants screen");
     }
 
     function handleCancelBtn() {
@@ -24,12 +24,12 @@ export default function Event({ route, navigation }) {
     }
 
     function handleConfirmBtn() {
-        console.log("Navigate to schedule screen");
+        // console.log("Navigate to schedule screen");
         navigation.navigate('Agenda');
     }
 
     function handleSeeAllImages() {
-        console.log("Show all instagram images");
+        // console.log("Show all instagram images");
     }
 
     return (
@@ -108,14 +108,19 @@ const styles = StyleSheet.create({
         paddingVertical: hp('2.5%'),
         paddingHorizontal: wp('5%'),
 
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderLeftWidth: 3,
+        borderRightWidth: 3,
+
+        // shadowColor: "#000",
+        // shadowOffset: {
+        //     width: 3,
+        //     height: 5,
+        // },
+        // shadowOpacity: 0.15,
+        // shadowRadius: 3.84,
+        // elevation: .75,
 
     },
     confirmedPeopleBtnNumber: {
@@ -123,7 +128,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: RFPercentage(4),
         fontWeight: 'bold',
-
     },
     confirmedPeopleBtnTextContainer: {
         display: 'flex',
@@ -205,14 +209,21 @@ const styles = StyleSheet.create({
         width: wp('25%'),
         height: wp('25%'),
         borderRadius: 100,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderTopWidth: 0,
+        borderLeftWidth: 3,
+        borderRightWidth: 1,
+
+        // shadowColor: "#000",
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2,
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 3.84,
+        // elevation: 5,
     },
 
 });

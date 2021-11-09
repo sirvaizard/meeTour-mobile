@@ -32,6 +32,7 @@ const eventos = [
 ]
 
 export default function Agenda({ route, navigation }: {route: any, navigation: any}) {
+   
     function handleConfirmEvent() {
         // navigation.navigate('Event', { event: eventTo });
     }
@@ -42,7 +43,7 @@ export default function Agenda({ route, navigation }: {route: any, navigation: a
                 <Text style={styles.logoTitle}>Agenda</Text>
             </View>
 
-            { eventos.map((evento, index) => (
+            {/* { eventos.map((evento, index) => (
                 <View key={String(index)} style={styles.eventContainer}>
                     <TouchableOpacity onPress={handleConfirmEvent}>
                         <View style={styles.titleContainer}>
@@ -64,7 +65,7 @@ export default function Agenda({ route, navigation }: {route: any, navigation: a
                         </View>
                     </TouchableOpacity>
                 </View>
-            ))}
+            ))} */}
         </ScrollView>
     )
 }

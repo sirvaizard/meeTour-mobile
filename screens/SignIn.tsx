@@ -24,7 +24,9 @@ export default function SignIn({ navigation }: { navigation: any }) {
         const dateComponents = data.birth.split('/');
         const isoDate = new Date( `${dateComponents[2]}-${dateComponents[1]}-${dateComponents[0]}` );
 
-        let cleanedCPF = data.cpf.replaceAll('.', '');
+        //the function replaceAll didn't work on android
+        let cleanedCPF = data.cpf.replace('.', '');
+        cleanedCPF = cleanedCPF.replace('.', '');
         cleanedCPF = cleanedCPF.replace('-', '');
 
 

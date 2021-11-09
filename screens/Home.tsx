@@ -125,17 +125,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     button: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        // shadowColor: "#000",
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2,
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 3.84,
+        // elevation: .75,
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderTopWidth: 0,
+        borderLeftWidth: 3,
+        borderRightWidth: 3,
         width: hp('18%'),
         height: hp('18%'),
-        borderRadius: 100,
+        borderRadius: hp('18%')/2,
         justifyContent: 'center',
         alignItems: 'center'
     },
