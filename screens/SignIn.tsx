@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, ScrollView, TouchableOpacity, View, Button } from 'react-native';
+import { StyleSheet, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 import { Text } from '../components/Themed';
 import { useForm, Controller } from 'react-hook-form';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,12 +19,21 @@ export default function SignIn({ navigation }: { navigation: any }) {
     }
 
     async function onSubmit(data: { name: string, email: string, cpf: string, birth: string, password: string }) {
+
+        //setting the form data to meet the api formats
+        const dateComponents = data.birth.split('/');
+        const isoDate = new Date( `${dateComponents[2]}-${dateComponents[1]}-${dateComponents[0]}` );
+
+        let cleanedCPF = data.cpf.replaceAll('.', '');
+        cleanedCPF = cleanedCPF.replace('-', '');
+
+
         await api.post("/user",
             {
                 name: data.name,
                 email: data.email,
-                cpf: data.cpf,
-                birth: data.birth,
+                cpf: cleanedCPF,
+                birth: isoDate,
                 password: data.password
             }
         )
@@ -100,10 +110,12 @@ export default function SignIn({ navigation }: { navigation: any }) {
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
+                    <TextInputMask
                         placeholder="CPF"
                         style={styles.input}
+                        type='cpf'
                         onBlur={onBlur}
+                        keyboardType="numeric"
                         onChangeText={value => onChange(value)}
                         value={value !== undefined ? value : ''}
                     />
@@ -112,25 +124,26 @@ export default function SignIn({ navigation }: { navigation: any }) {
                 rules={{
                     required: { value: true, message: "Insira seu cpf sem pontos ou traços" },
                     minLength: {
-                        value: 11,
-                        message: 'Insira seu cpf sem pontos ou traços'
-                    },
-                    maxLength: {
-                        value: 11,
-                        message: 'Insira seu cpf sem pontos ou traços'
+                        value: 14,
+                        message: 'Insira seu cpf'
                     }
                 }}
             />
 
             {errors.cpf && <Text style={styles.error}>{errors.cpf.message}</Text>}
 
-            {/* <Controller
+            <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
+                    <TextInputMask
                         placeholder="Data de nascimento"
                         style={styles.input}
+                        type={"datetime"}
+                        options={{
+                            format: 'DD/MM/YYYY'
+                        }}
                         onBlur={onBlur}
+                        keyboardType="numeric"
                         onChangeText={value => onChange(value)}
                         value={value !== undefined ? value : ''}
                     />
@@ -142,23 +155,8 @@ export default function SignIn({ navigation }: { navigation: any }) {
                         value: 10,
                         message: 'Insira uma data no formato dd-mm-aaaa'
                     },
-                    maxLength: {
-                        value: 10,
-                        message: 'Insira uma data no formato dd-mm-aaaa'
-                    }
                 }}
-            /> */}
-
-            {/* <Controller
-                name="birth"
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                    <DatePicker
-                        selected={value}
-                        onChange={onChange}
-                    />
-                )}
-            /> */}
+            />
 
             {errors.birth && <Text style={styles.error}>{errors.birth.message}</Text>}
 

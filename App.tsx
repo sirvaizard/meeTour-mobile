@@ -28,7 +28,7 @@ export default function App() {
 
     return (
       <AppLoading
-        startAsync={async () => {console.log('placeholder')}}
+        startAsync={async () => {console.log('loading')}}
         onFinish={() => setAppReady(true)}
         onError={console.warn}
       />
