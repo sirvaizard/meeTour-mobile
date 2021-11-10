@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'react-native';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,10 +8,12 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Header from '../components/Header';
 
+import { CredentialsContext } from '../components/CredentialsContext';
 
 import masp from '../assets/images/mask.png'
 import mercadola from '../assets/images/mercadola.jpg'
 import lugar from '../assets/images/lugar.jpg'
+
 
 interface Event {
     name: string,
@@ -19,42 +21,131 @@ interface Event {
     address: string,
     date: string,
     distance: string,
-    image: ImageProps,
+    image: string,
     description: string,
     confirmed: number // tem q trocar isso depois pra um obj/array com todos os confirmados
 }
 
 const events: Event[] = [
+    // {
+    //     name: 'Exposição Z',
+    //     location: 'MASP',
+    //     address: 'Av. Paulista, 1000',
+    //     date: '29 fev',
+    //     distance: '12 km',
+    //     image: masp,
+    //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
+    //     confirmed: 23
+    // },
+    // {
+    //     name: 'Exposição Y',
+    //     location: 'Praça da Sé',
+    //     address: 'Av. Sé, 500',
+    //     date: '10 mar',
+    //     distance: '8 km',
+    //     image: lugar,
+    //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
+    //     confirmed: 10
+    // },
+    // {
+    //     name: 'Exposição X',
+    //     location: 'Mercadão Municipio',
+    //     address: 'Av. Mercado, 99',
+    //     date: '25 dez',
+    //     distance: '36 km',
+    //     image: mercadola,
+    //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
+    //     confirmed: 28
+    // }
+
     {
-        name: 'Exposição Z',
-        location: 'MASP',
-        address: 'Av. Paulista, 1000',
-        date: '29 fev',
+        name: 'O Legado de Giorgio Morandi',
+        location: 'CCBB',
+        address: 'Rua Álvares Penteado, 112',
+        date: '20 nov',
+        distance: '12,5 km',
+        image: 'https://lh3.googleusercontent.com/b2AEctDkcJdDyIVAcydJtaqeugxZ2CUcvi46BOwEgNLXZuDqdSCEVxq8lp_Lm2aD',
+        description: 'Giorgio Morandi se dedicou intensamente na pintura de naturezas-mortas, especialmente de conjuntos de garrafas',
+        confirmed: 15
+      },
+      {
+        name: 'Geraldo de Barros',
+        location: 'Itaú Cultural',
+        address: 'Avenida Paulista, 149',
+        date: '06 nov',
+        distance: '8,3 km',
+        image: 'https://vejasp.abril.com.br/wp-content/uploads/2016/11/22384_itau-cultural-edouard-fraipont.jpeg?quality=70&strip=info&w=800',
+        description: 'Mais de 400 itens relacionados ao artista paulista Geraldo de Barros (1923-1988) foram reunidos em mostra inédita do Itaú Cultural.',
+        confirmed: 21
+      },
+      {
+        name: 'HYOGO EXPERIENCE',
+        location: 'Japan House',
+        address: 'Av. Paulista, 52',
+        date: '05 nov',
+        distance: '20 km',
+        image: 'https://www.japanhousesp.com.br/sites/japanhouse.com.saopaulo/files/2021-10/Hyogo%20Experience2.jpg',
+        description: 'Neste evento, serão apresentados os atrativos de Tajima, região de origem do Asakura Sansho - uma pimenta aromática japonesa - o local de produção e curiosidades do tempero - como e onde é possível degustar a iguaria no Brasil.',
+        confirmed: 25
+      },
+      {
+        name: 'Sessão Cidadã - Olhar o céu de São Paulo outra vez',
+        location: 'Planetário Ibirapuera',
+        address: 'Av. Pedro Álvares Cabral, s/n - Portão 10',
+        date: '05 nov',
+        distance: '5,0 km',
+        image: 'https://f.i.uol.com.br/fotografia/2018/07/20/15321024685b520744e70b6_1532102468_3x2_rt.jpg',
+        description: `“Olhar o céu de São Paulo outra vez” é a atração de reabertura do Planetário Ibirapuera, que está de portas abertas novamente, com entrada gratuita.
+      
+        Presente na memória de muitos paulistanos, esta sessão destaca o céu de São Paulo, que há muito não se vê por causa da poluição luminosa e crescimento desenfreado da cidade. O público poderá conhecer este lugar icônico - e que ainda hoje encanta gerações - e que foi o primeiro Planetário construído no Brasil, em 1957.
+        
+        As sessões são recomendadas para o público geral a partir de 5 anos, porém, é livre para todos os públicos.`,
+        confirmed: 43
+      },
+      {
+        name: 'Jovens Solistas',
+        location: 'TMSP',
+        address: 'Praça Ramos de Azevedo',
+        date: '7 nov',
         distance: '12 km',
-        image: masp,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
-        confirmed: 23
-    },
-    {
-        name: 'Exposição Y',
-        location: 'Praça da Sé',
-        address: 'Av. Sé, 500',
-        date: '10 mar',
-        distance: '8 km',
-        image: lugar,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
+        image: 'https://www.infoescola.com/wp-content/uploads/2011/12/teatro-municipal-de-s%C3%A3o-paulo_460468993.jpg',
+        description: 'Orquestra Experimental de Repertório apresenta Concerto Encerramento Jovens Solistas',
         confirmed: 10
-    },
-    {
-        name: 'Exposição X',
-        location: 'Mercadão Municipio',
-        address: 'Av. Mercado, 99',
-        date: '25 dez',
-        distance: '36 km',
-        image: mercadola,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
-        confirmed: 28
-    }
+      },
+      {
+        name: 'Visita ao Mirante Sesc SP',
+        location: 'Avenida Paulista, 119',
+        address: 'Av. Sé, 500',
+        date: '07 nov',
+        distance: '8 km',
+        image: 'https://coisosonthego.com/wp-content/uploads/2018/05/O-SESC-Avenida-Paulista-e-seus-vizinhos-Ita%C3%BA-Cultural-e-Casa-das-Rosas.jpg',
+        description: 'Visita ao mirante do SESC SP, grande oportunidade de uma visão mais abrangente da nossa cidade.',
+        confirmed: 10
+      },
+      {
+        name: 'CURIOSIDADES SOBRE O EDIFÍCIO MARTINELLI',
+        location: 'Edifício Martinelli',
+        address: 'Avenida São João, 35',
+        date: '01 fev',
+        distance: '1 km',
+        image: 'https://i1.wp.com/www.prediomartinelli.com.br/wp-content/uploads/2019/11/slideshow-predio-martinelli.jpg',
+        description: `Idealizado e projetado pelo italiano Giuseppe Martinelli, marcado por uma transição da era dos arranha-céus da capital na década de 1920 e um marco da arquitetura paulistana.
+        O Edifício Martinelli localizado entre as ruas São Bento, São João e Líbero Badaró, é atualmente um dos principais símbolos arquitetônicos do Brasil.
+        Já foi ponto de encontro da alta sociedade paulistana. Por lá já passaram estabelecimentos como o Cine Rosário e o luxuoso Hotel São Bento, além de barbearias, lojas e até uma igreja.
+        
+        Quer saber mais sobre a história desse ícone de São Paulo?! Acompanhe!`,
+        confirmed: 14
+      },
+      {
+        name: 'Exposição Tinha que ser',
+        location: 'Centro Cultural São Paulo',
+        address: 'Rua Vergueiro, 1000',
+        date: '07 nov',
+        distance: '17,7 km',
+        image: 'http://centrocultural.sp.gov.br/wp-content/uploads/2021/11/post-tinha-que-ser-1160x653.jpg',
+        description: 'No mês de novembro, o Centro Cultural São Paulo recebe a Mostra Tinha que ser, da artista Mabelle Collage. Com trabalhos inéditos, a mostra apresenta 6 painéis em lambe-lambe espalhados pelos espaços do CCSP. Utilizando apenas duas imagens sobrepostas, a artista apresenta o seu trabalho de forma leve, no qual o contraste visual confronta também a realidade.',
+        confirmed: 37
+      },
 ]
 
 export default function Home(props: any) {
@@ -62,8 +153,10 @@ export default function Home(props: any) {
     const [currentEvent, setCurrentEvent] = React.useState<Event>(events[0])
     const [currentIndex, setCurrentIndex] = React.useState(0)
 
+    const {storedCredentials} = useContext(CredentialsContext);
+
     function handleSwitchEvent() {
-        console.warn(props);
+        console.log(storedCredentials);
         setCurrentEvent(events[(currentIndex + 1) % events.length])
         setCurrentIndex((currentIndex + 1) % events.length)
     }
@@ -121,17 +214,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     button: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        // shadowColor: "#000",
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2,
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 3.84,
+        // elevation: .75,
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderTopWidth: 0,
+        borderLeftWidth: 3,
+        borderRightWidth: 3,
         width: hp('18%'),
         height: hp('18%'),
-        borderRadius: 100,
+        borderRadius: hp('18%')/2,
         justifyContent: 'center',
         alignItems: 'center'
     },

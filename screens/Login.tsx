@@ -1,23 +1,44 @@
-import * as React from 'react';
-import { StyleSheet, TextInput, Alert, TouchableOpacity, Image, ImageProps } from 'react-native';
+import React, {useContext, useState} from 'react';
+import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
 import { useForm, Controller } from 'react-hook-form';
 import { LinearGradient } from 'expo-linear-gradient';
 import Constants from 'expo-constants';
-import { RFPercentage } from "react-native-responsive-fontsize";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Logo from '../assets/images/logo_signin.png';
+import Logo from '../components/Logo';
 import api from "../services/api";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CredentialsContext } from '../components/CredentialsContext';
 
 export default function Login({ navigation }: { navigation: any }) {
 
+    //useForm 
     const { handleSubmit, control, formState: { errors } } = useForm({mode: 'onBlur'});
+
+    //persist login
+    const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
+
+    //feedback message
+    const [message, setMessage] = useState<String | null>(null);
 
     function handleSignInBtn() {
         navigation.navigate('SignIn');
     }
 
+    function persistLogin(credentials: any){
+
+        AsyncStorage.setItem('meeTourCredentials', JSON.stringify(credentials))
+            .then(() => {
+                setStoredCredentials(credentials);
+            })
+            .catch(err => console.log(err));
+
+    }
+
     async function onSubmit(data: { email: string, password: string }) {
+
+        setMessage(null);
         
         await api.post("/token", 
             {
@@ -25,18 +46,22 @@ export default function Login({ navigation }: { navigation: any }) {
                 password: data.password 
             }
         )
-        .then(response => {console.log(response), navigation.navigate('BottomTabNav')})
-        .catch(err => console.log(err))
+        .then(response => {
+            console.log(response);
+            persistLogin(response.data);
+            navigation.navigate('BottomTabNav');
+        })
+        .catch(err => {
+            console.log(err);
+            setMessage("Email e/ou senha inválidos")
+        })
 
-        // navigation.navigate('BottomTabNav')
     }
 
     return (
         <View style={styles.container}>
 
-            <View>
-                <Image source={Logo} style={styles.logo} />
-            </View>
+            <Logo />
 
             <Text style={styles.label}>Fazer login no MeeTour</Text>
 
@@ -79,8 +104,8 @@ export default function Login({ navigation }: { navigation: any }) {
                 rules={{ 
                     required: { value: true, message: "Insira sua senha" },
                     minLength: {
-                        value: 8,
-                        message: 'Insira sua senha (mín 8 caracteres)'
+                        value: 6,
+                        message: 'Insira sua senha (mín 6 caracteres)'
                     }
                 }}
             />
@@ -103,6 +128,8 @@ export default function Login({ navigation }: { navigation: any }) {
                     <Text style={styles.buttonText}> Entrar </Text >
                 </LinearGradient>
             </TouchableOpacity>
+
+            {message !== null && <Text style={styles.error}>{message}</Text>}
 
             <Text style={styles.label}>Primeira vez por aqui?</Text>
 
@@ -129,18 +156,12 @@ export default function Login({ navigation }: { navigation: any }) {
 };
 
 const styles = StyleSheet.create({
-    logo: {
-        height: 45,
-        width: wp('50%'),
-        marginLeft: wp('20%'),
-        // resizeMode: 'contain',
-        marginBottom: 20
-    },
     label: {
         marginLeft: 10,
         marginTop: 30,
         marginBottom: 10,
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        color: '#181818'
     },
     error: {
         color: 'red'
@@ -154,12 +175,12 @@ const styles = StyleSheet.create({
 
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: 3,
+            height: 5,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.15,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 1,
     },
     buttonText: {
         color: 'white',
@@ -176,12 +197,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: 3,
+            height: 5,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.15,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 1,
         height: 40,
         padding: 10,
         borderRadius: 8,
