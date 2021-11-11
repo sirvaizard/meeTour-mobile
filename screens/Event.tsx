@@ -16,7 +16,8 @@ let array: number[] = [1, 2, 3];
 export default function Event({ route, navigation }) {
 
     function handleConfirmedPeopleBtn() {
-        // console.log("Navigate to participants screen");
+        alert('alo pessoas')
+        navigation.navigate('Confirmed');
     }
 
     function handleCancelBtn() {
