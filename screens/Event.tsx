@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from '../components/Themed';
 import { RFPercentage } from "react-native-responsive-fontsize";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import EventCard from '../components/EventCard';
+import BntRectangle from '../components/BtnRectangle';
 import Header from '../components/Header';
 import pinguins from '../assets/images/pinguins.jpg';
 
@@ -16,7 +17,6 @@ let array: number[] = [1, 2, 3];
 export default function Event({ route, navigation }) {
 
     function handleConfirmedPeopleBtn() {
-        alert('alo pessoas')
         navigation.navigate('Confirmed');
     }
 
@@ -40,13 +40,12 @@ export default function Event({ route, navigation }) {
 
             <EventCard event={route.params.event} />
 
-            <TouchableOpacity style={styles.confirmedPeopleBtn} onPress={handleConfirmedPeopleBtn}>
-                <Text style={styles.confirmedPeopleBtnNumber}>{route.params.event.confirmed}</Text>
-                <View style={styles.confirmedPeopleBtnTextContainer} >
-                    <Text>Pessoas confirmaram presença</Text>
-                    <Ionicons name="arrow-forward" size={25} color="black" />
-                </View>
-            </TouchableOpacity>
+            <BntRectangle
+                route={route}
+                number={route.params.event.confirmed} 
+                text="Pessoas confirmaram presença"
+                callback={handleConfirmedPeopleBtn}
+            />
 
             <View style={styles.descriptionContainer}>
                 <Text style={styles.descriptionTitle}>Descrição do Evento</Text>
@@ -62,7 +61,7 @@ export default function Event({ route, navigation }) {
                     <Image source={placeImages[1]} style={styles.placeImage} />
                     <Image source={placeImages[2]} style={styles.placeImage} />
                 </View>
-                <TouchableOpacity style={styles.placeImagesSectionBottom} onPress={handleSeeAllImages}> 
+                <TouchableOpacity style={styles.placeImagesSectionBottom} onPress={handleSeeAllImages}>
                     <Text style={styles.placeImagesSectionBottomText}>Ver todas as fotos</Text>
                     <Ionicons name="arrow-forward" size={25} color="#6951FF" />
                 </TouchableOpacity>
@@ -98,44 +97,6 @@ const styles = StyleSheet.create({
     container: {
         overflow: 'hidden',
         backgroundColor: '#fff'
-    },
-    confirmedPeopleBtn: {
-        display: 'flex',
-        margin: 'auto',
-        marginHorizontal: wp('3%'),
-        borderRadius: 15,
-        marginTop: hp('2%'),
-        marginBottom: hp('2%'),
-        paddingVertical: hp('2.5%'),
-        paddingHorizontal: wp('5%'),
-
-        borderColor: '#6868683d',
-        borderBottomWidth: 3,
-        borderLeftWidth: 3,
-        borderRightWidth: 3,
-
-        // shadowColor: "#000",
-        // shadowOffset: {
-        //     width: 3,
-        //     height: 5,
-        // },
-        // shadowOpacity: 0.15,
-        // shadowRadius: 3.84,
-        // elevation: .75,
-
-    },
-    confirmedPeopleBtnNumber: {
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: RFPercentage(4),
-        fontWeight: 'bold',
-    },
-    confirmedPeopleBtnTextContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        fontSize: RFPercentage(2)
     },
     descriptionContainer: {
         display: 'flex',
@@ -178,7 +139,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
     },
-    placeImagesSectionBottomText:{
+    placeImagesSectionBottomText: {
         color: '#6951FF'
     },
     placeImagesContainer: {

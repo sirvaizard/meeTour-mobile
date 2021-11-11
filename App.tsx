@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import useCachedResources from './hooks/useCachedResources';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Navigation from './navigation';
 
 import AppLoading from 'expo-app-loading';
@@ -12,10 +11,10 @@ export default function App() {
   const [appReady, setAppReady] = useState(false);
   const [storedCredentials, setStoredCredentials] = useState('');
 
-  function checkStoredCredentials(){
+  function checkStoredCredentials() {
     AsyncStorage.getItem('meeTourCredentials')
       .then(res => {
-        if(res !== null){
+        if (res !== null) {
           setStoredCredentials(JSON.parse(res));
         }/* else{
           setStoredCredentials("");
@@ -28,7 +27,7 @@ export default function App() {
 
     return (
       <AppLoading
-        startAsync={async () => {console.log('loading')}}
+        startAsync={async () => { console.log('loading') }}
         onFinish={() => setAppReady(true)}
         onError={console.warn}
       />
@@ -38,10 +37,12 @@ export default function App() {
 
     return (
 
-      <CredentialsContext.Provider value={ {storedCredentials, setStoredCredentials} }>
+      <CredentialsContext.Provider value={{ storedCredentials, setStoredCredentials }}>
 
         <SafeAreaProvider>
-          <Navigation />
+          <SafeAreaView style={{ flex: 1 }}>
+            <Navigation />
+          </SafeAreaView>
         </SafeAreaProvider>
 
       </CredentialsContext.Provider>

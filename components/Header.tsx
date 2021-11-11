@@ -7,7 +7,6 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 const styles = StyleSheet.create({
     header: {
-        marginTop: hp('4%'),
         marginBottom: hp('2%'),
         flexDirection: 'row',
         justifyContent: 'center',
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function EventCard() {
+export default function Header() {
 
     return (
         <>

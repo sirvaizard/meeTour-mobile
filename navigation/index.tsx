@@ -16,6 +16,7 @@ import SignIn from '../screens/SignIn';
 import Home from '../screens/Home';
 import Confirmed from '../screens/Confirmed';
 import Event from '../screens/Event'
+import EventsWent from '../screens/EventsWent'
 import Agenda from '../screens/Agenda'
 import Profile from '../screens/Profile'
 
@@ -124,6 +125,13 @@ function EventTabStack() {
           headerShown: false,
         })}
       />
+      <EventStack.Screen
+        name="EventsWent"
+        component={EventsWent}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
     </EventStack.Navigator>
   );
 }
@@ -143,7 +151,7 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="EventStack"
+        name="Home"
         component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,
