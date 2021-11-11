@@ -15,6 +15,7 @@ import Login from '../screens/Login';
 import SignIn from '../screens/SignIn';
 import Home from '../screens/Home';
 import Event from '../screens/Event'
+import EventsWent from '../screens/EventsWent'
 import Agenda from '../screens/Agenda'
 import Profile from '../screens/Profile'
 
@@ -65,7 +66,7 @@ function MainNavStack() {
           ) : (
 
             <MainNav.Navigator>
-              {/* <MainNav.Screen
+              <MainNav.Screen
                 name="Login"
                 component={Login}
                 options={({ navigation }) => ({
@@ -78,7 +79,7 @@ function MainNavStack() {
                 options={({ navigation }) => ({
                   headerShown: false,
                 })}
-              /> */}
+              />
               <MainNav.Screen
                 name="BottomTabNav"
                 component={BottomTabNavigator}
@@ -116,6 +117,13 @@ function EventTabStack() {
           headerShown: false,
         })}
       />
+      <EventStack.Screen
+        name="EventsWent"
+        component={EventsWent}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
     </EventStack.Navigator>
   );
 }
@@ -135,7 +143,7 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="EventStack"
+        name="Home"
         component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,

@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     },
     confirmedPeopleBtnNumber: {
         display: 'flex',
+        color: '#6951FF',
         alignItems: 'center',
         fontSize: RFPercentage(4),
         fontWeight: 'bold',

@@ -6,38 +6,28 @@ import { Text, View } from '../components/Themed';
 const eventos = [
 
     {
-        name: 'O Legado de Giorgio Morandi',
-        location: 'CCBB',
-        address: 'Rua Álvares Penteado, 112',
-        date: '20 nov',
-        distance: '12,5 km',
-        image: 'https://lh3.googleusercontent.com/b2AEctDkcJdDyIVAcydJtaqeugxZ2CUcvi46BOwEgNLXZuDqdSCEVxq8lp_Lm2aD',
-        description: 'Giorgio Morandi se dedicou intensamente na pintura de naturezas-mortas, especialmente de conjuntos de garrafas',
-        confirmed: 15
+        name: 'Jovens Solistas',
+        location: 'TMSP',
+        address: 'Praça Ramos de Azevedo',
+        date: '7 nov',
+        distance: '12 km',
+        image: 'https://www.infoescola.com/wp-content/uploads/2011/12/teatro-municipal-de-s%C3%A3o-paulo_460468993.jpg',
+        description: 'Orquestra Experimental de Repertório apresenta Concerto Encerramento Jovens Solistas',
+        confirmed: 10
       },
       {
-        name: 'Geraldo de Barros',
-        location: 'Itaú Cultural',
-        address: 'Avenida Paulista, 149',
-        date: '06 nov',
-        distance: '8,3 km',
-        image: 'https://vejasp.abril.com.br/wp-content/uploads/2016/11/22384_itau-cultural-edouard-fraipont.jpeg?quality=70&strip=info&w=800',
-        description: 'Mais de 400 itens relacionados ao artista paulista Geraldo de Barros (1923-1988) foram reunidos em mostra inédita do Itaú Cultural.',
-        confirmed: 21
-      },
-      {
-        name: 'HYOGO EXPERIENCE',
-        location: 'Japan House',
-        address: 'Av. Paulista, 52',
-        date: '05 nov',
-        distance: '20 km',
-        image: 'https://www.japanhousesp.com.br/sites/japanhouse.com.saopaulo/files/2021-10/Hyogo%20Experience2.jpg',
-        description: 'Neste evento, serão apresentados os atrativos de Tajima, região de origem do Asakura Sansho - uma pimenta aromática japonesa - o local de produção e curiosidades do tempero - como e onde é possível degustar a iguaria no Brasil.',
-        confirmed: 25
+        name: 'Visita ao Mirante Sesc SP',
+        location: 'Avenida Paulista, 119',
+        address: 'Av. Sé, 500',
+        date: '07 nov',
+        distance: '8 km',
+        image: 'https://coisosonthego.com/wp-content/uploads/2018/05/O-SESC-Avenida-Paulista-e-seus-vizinhos-Ita%C3%BA-Cultural-e-Casa-das-Rosas.jpg',
+        description: 'Visita ao mirante do SESC SP, grande oportunidade de uma visão mais abrangente da nossa cidade.',
+        confirmed: 10
       },
 ]
 
-export default function Agenda({ route, navigation }: {route: any, navigation: any}) {
+export default function EventsWent({ route, navigation }: {route: any, navigation: any}) {
    
     function handleConfirmEvent() {
         // navigation.navigate('Event', { event: eventTo });
@@ -46,7 +36,7 @@ export default function Agenda({ route, navigation }: {route: any, navigation: a
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.logoTitle}>Agenda</Text>
+                <Text style={styles.logoTitle}>Eventos participados</Text>
             </View>
 
             { eventos.map((evento, index) => (

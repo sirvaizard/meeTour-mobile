@@ -27,36 +27,6 @@ interface Event {
 }
 
 const events: Event[] = [
-    // {
-    //     name: 'Exposição Z',
-    //     location: 'MASP',
-    //     address: 'Av. Paulista, 1000',
-    //     date: '29 fev',
-    //     distance: '12 km',
-    //     image: masp,
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
-    //     confirmed: 23
-    // },
-    // {
-    //     name: 'Exposição Y',
-    //     location: 'Praça da Sé',
-    //     address: 'Av. Sé, 500',
-    //     date: '10 mar',
-    //     distance: '8 km',
-    //     image: lugar,
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
-    //     confirmed: 10
-    // },
-    // {
-    //     name: 'Exposição X',
-    //     location: 'Mercadão Municipio',
-    //     address: 'Av. Mercado, 99',
-    //     date: '25 dez',
-    //     distance: '36 km',
-    //     image: mercadola,
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum. Nullam elementum leo sit amet felis suscipit posuere. Aliquam erat volutpat. Nunc.',
-    //     confirmed: 28
-    // }
 
     {
         name: 'O Legado de Giorgio Morandi',

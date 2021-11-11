@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from '../components/Themed';
 import { Ionicons } from "@expo/vector-icons";
+//https://snack.expo.dev/@miblanchard/@miblanchard-react-native-slider
+import { Slider } from "@miblanchard/react-native-slider";
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import BntRectangle from '../components/BtnRectangle';
@@ -11,10 +12,10 @@ import BntRectangle from '../components/BtnRectangle';
 import mercadola from '../assets/images/mercadola.jpg'
 
 
-export default function Agenda({ route }: { route: any }) {
+export default function Profile({ route, navigation }: { route: any, navigation: any }) {
 
     function handleEventsWent() {
-        console.warn("Navigate to participants screen");
+        navigation.navigate('EventsWent');
     }
 
     return (
@@ -31,7 +32,7 @@ export default function Agenda({ route }: { route: any }) {
             <BntRectangle
                 route={route}
                 number={15}
-                text="Pessoas confirmaram presença"
+                text="Eventos participados"
                 callback={handleEventsWent}
             />
 
@@ -54,6 +55,24 @@ export default function Agenda({ route }: { route: any }) {
                         <Text style={styles.btnInterestCaption}>Tecnologia</Text>
                     </TouchableOpacity>
 
+                </View>
+
+                
+                <View style={styles.sliderContainer}>
+                    <Text style={styles.sliderContainerTitle}>Raio de busca por eventos</Text>
+
+                    <Text style={styles.sliderValue}>150km</Text>
+
+                    <Slider
+                        animateTransitions
+                        thumbTintColor="#5942ee"
+                        maximumTrackTintColor="#c9c1fd"
+                        minimumTrackTintColor="#8A94F0"
+                        maximumValue={300}
+                        minimumValue={0}
+                        step={1}
+                        value={150}
+                    />
                 </View>
 
             </View>
@@ -108,7 +127,8 @@ const styles = StyleSheet.create({
     interestsTitle: {
         fontSize: RFPercentage(2.5),
         color: '#6951FF',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+
     },
     interestsBtnsContainer: {
         width: wp('90%'),
@@ -122,11 +142,27 @@ const styles = StyleSheet.create({
         width: wp('23%'),
         paddingBottom: 2,
         borderRadius: 10,
-        borderColor: '#6951FF',
-        borderWidth: 2
+        borderColor: '#8A94F0',
+        borderWidth: 2,
     },
     btnInterestCaption:{
         fontSize: RFPercentage(2),
         color: '#6951FF',
+        fontWeight: 'bold'
+    },
+    sliderContainer:{
+        margin: 'auto',
+        width: wp('90%'),
+        paddingVertical: wp('5%')
+    },
+    sliderContainerTitle:{
+        fontSize: RFPercentage(2.5),
+        color: '#6951FF',
+        fontWeight: 'bold'
+    },
+    sliderValue:{
+        marginTop: 10,
+        marginLeft: wp('37%'),
+        fontSize: RFPercentage(2.5),
     }
 });
