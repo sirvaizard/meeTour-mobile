@@ -51,7 +51,7 @@ export default function Confirmed({ route, navigation }: { route: any; navigatio
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.logoTitle}>Confirmed</Text>
+        <Text style={styles.logoTitle}>Confirmados</Text>
       </View>
 
       {confirmeds.map((confirmed, index) => (
