@@ -14,6 +14,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import Login from '../screens/Login';
 import SignIn from '../screens/SignIn';
 import Home from '../screens/Home';
+import Confirmed from '../screens/Confirmed';
 import Event from '../screens/Event'
 import EventsWent from '../screens/EventsWent'
 import Agenda from '../screens/Agenda'
@@ -66,7 +67,7 @@ function MainNavStack() {
           ) : (
 
             <MainNav.Navigator>
-              <MainNav.Screen
+              {/* <MainNav.Screen
                 name="Login"
                 component={Login}
                 options={({ navigation }) => ({
@@ -79,7 +80,7 @@ function MainNavStack() {
                 options={({ navigation }) => ({
                   headerShown: false,
                 })}
-              />
+              /> */}
               <MainNav.Screen
                 name="BottomTabNav"
                 component={BottomTabNavigator}
@@ -103,6 +104,13 @@ const EventStack = createStackNavigator();
 function EventTabStack() {
   return (
     <EventStack.Navigator>
+      <EventStack.Screen
+        name="Confirmed"
+        component={Confirmed}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
       <EventStack.Screen
         name="Home"
         component={Home}
