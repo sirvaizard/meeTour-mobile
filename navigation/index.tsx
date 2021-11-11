@@ -65,7 +65,7 @@ function MainNavStack() {
           ) : (
 
             <MainNav.Navigator>
-              <MainNav.Screen
+              {/* <MainNav.Screen
                 name="Login"
                 component={Login}
                 options={({ navigation }) => ({
@@ -78,7 +78,7 @@ function MainNavStack() {
                 options={({ navigation }) => ({
                   headerShown: false,
                 })}
-              />
+              /> */}
               <MainNav.Screen
                 name="BottomTabNav"
                 component={BottomTabNavigator}
