@@ -67,20 +67,7 @@ function MainNavStack() {
           ) : (
 
             <MainNav.Navigator>
-              {/* <MainNav.Screen
-                name="Login"
-                component={Login}
-                options={({ navigation }) => ({
-                  headerShown: false,
-                })}
-              />
-              <MainNav.Screen
-                name="SignIn"
-                component={SignIn}
-                options={({ navigation }) => ({
-                  headerShown: false,
-                })}
-              /> */}
+              z
               <MainNav.Screen
                 name="BottomTabNav"
                 component={BottomTabNavigator}
@@ -105,19 +92,19 @@ function EventTabStack() {
   return (
     <EventStack.Navigator>
       <EventStack.Screen
-        name="Confirmed"
-        component={Confirmed}
-        options={({ navigation }) => ({
-          headerShown: false,
-        })}
-      />
-      <EventStack.Screen
         name="Home"
         component={Home}
         options={({ navigation }) => ({
           headerShown: false,
         })}
       />
+        <EventStack.Screen
+          name="Confirmed"
+          component={Confirmed}
+          options={({ navigation }) => ({
+            headerShown: false,
+          })}
+        />
       <EventStack.Screen
         name="Event"
         component={Event}
@@ -151,7 +138,7 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Home"
+        name="Início" 
         component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,

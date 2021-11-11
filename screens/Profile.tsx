@@ -18,6 +18,14 @@ export default function Profile({ route, navigation }: { route: any, navigation:
         navigation.navigate('EventsWent');
     }
 
+    function handleSaveChanges() {
+        console.warn(sliderValue);
+    }
+
+    const defaultSliderValue = 150; //to do: api call here
+
+    const [sliderValue, setSliderValue] = React.useState<any>(defaultSliderValue);
+
     return (
         <ScrollView style={styles.container}>
 
@@ -57,11 +65,11 @@ export default function Profile({ route, navigation }: { route: any, navigation:
 
                 </View>
 
-                
+
                 <View style={styles.sliderContainer}>
                     <Text style={styles.sliderContainerTitle}>Raio de busca por eventos</Text>
 
-                    <Text style={styles.sliderValue}>150km</Text>
+                    <Text style={styles.sliderValue}>{sliderValue}km</Text>
 
                     <Slider
                         animateTransitions
@@ -71,9 +79,18 @@ export default function Profile({ route, navigation }: { route: any, navigation:
                         maximumValue={300}
                         minimumValue={0}
                         step={1}
-                        value={150}
+                        value={sliderValue}
+                        onValueChange={setSliderValue}
                     />
                 </View>
+
+                <TouchableOpacity
+                    disabled={defaultSliderValue == sliderValue}
+                    onPress={handleSaveChanges}
+                    style={[styles.saveChangesBtn, defaultSliderValue != sliderValue ? styles.saveChangesBtnEnabled : styles.saveChangesBtnDisabled]}
+                >
+                    <Text style={styles.saveChangesBtnText}>Salvar alteração</Text>
+                </TouchableOpacity>
 
             </View>
 
@@ -136,7 +153,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         flexDirection: 'row',
     },
-    btnInterest:{
+    btnInterest: {
         alignItems: 'center',
         textAlign: 'center',
         width: wp('23%'),
@@ -145,24 +162,44 @@ const styles = StyleSheet.create({
         borderColor: '#8A94F0',
         borderWidth: 2,
     },
-    btnInterestCaption:{
+    btnInterestCaption: {
         fontSize: RFPercentage(2),
         color: '#6951FF',
         fontWeight: 'bold'
     },
-    sliderContainer:{
+    sliderContainer: {
         margin: 'auto',
         width: wp('90%'),
-        paddingVertical: wp('5%')
+        paddingVertical: wp('5%'),
+        alignSelf: 'center'
     },
-    sliderContainerTitle:{
+    sliderContainerTitle: {
         fontSize: RFPercentage(2.5),
         color: '#6951FF',
         fontWeight: 'bold'
     },
-    sliderValue:{
+    sliderValue: {
         marginTop: 10,
-        marginLeft: wp('37%'),
+        alignSelf: 'center',
         fontSize: RFPercentage(2.5),
+    },
+    saveChangesBtn: {
+        width: wp('40%'),
+        alignItems: 'center',
+        alignSelf: 'center',
+        padding: 8,
+        marginBottom: 20,
+        borderRadius: 5,
+    },
+    saveChangesBtnEnabled:{
+        backgroundColor:'#6951FF'
+    },
+    saveChangesBtnDisabled:{
+        backgroundColor: '#646464'
+    },
+    saveChangesBtnText: {
+        fontSize: RFPercentage(2.5),
+        color: 'white',
+        fontWeight: 'bold'
     }
 });
