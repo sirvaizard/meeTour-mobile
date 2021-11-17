@@ -56,6 +56,21 @@ function MainNavStack() {
 
             <MainNav.Navigator>
               <MainNav.Screen
+                name="Login"
+                component={Login}
+                options={({ navigation }) => ({
+                  headerShown: false,
+                })}
+              />
+              <MainNav.Screen
+                name="SignIn"
+                component={SignIn}
+                options={({ navigation }) => ({
+                  headerShown: false,
+                })}
+              />
+              
+              <MainNav.Screen
                 name="BottomTabNav"
                 component={BottomTabNavigator}
                 options={({ navigation }) => ({
@@ -67,7 +82,7 @@ function MainNavStack() {
           ) : (
 
             <MainNav.Navigator>
-              z
+              
               <MainNav.Screen
                 name="BottomTabNav"
                 component={BottomTabNavigator}
