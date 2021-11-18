@@ -44,8 +44,7 @@ const confirmeds = [
 export default function Confirmed({ route, navigation }: { route: any; navigation: any; }) {
 
   function handleNavigateTo(confirmed: {id: string, name: string, avatar: string}) {
-    // navigation.navigate('Profile', { id: confirmed.id });
-    alert(`indo para o perfil de ${confirmed.name}, com o id: ${confirmed.id}`)
+    navigation.navigate('Perfil - MeeTour', { id: confirmed.id });
   }
 
   return (

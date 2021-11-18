@@ -3,42 +3,35 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import * as React from 'react';
-import { FontAwesome } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import * as React from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
 
-import Login from '../screens/Login';
-import SignIn from '../screens/SignIn';
-import Home from '../screens/Home';
-import Confirmed from '../screens/Confirmed';
-import Event from '../screens/Event'
-import EventsWent from '../screens/EventsWent'
-import Agenda from '../screens/Agenda'
-import Profile from '../screens/Profile'
+import Login from "../screens/Login";
+import SignIn from "../screens/SignIn";
+import Home from "../screens/Home";
+import Confirmed from "../screens/Confirmed";
+import Event from "../screens/Event";
+import EventsWent from "../screens/EventsWent";
+import Agenda from "../screens/Agenda";
+import Profile from "../screens/Profile";
+import ProfileOut from "../screens/ProfileOut";
 
-import { CredentialsContext } from '../components/CredentialsContext';
-
-
+import { CredentialsContext } from "../components/CredentialsContext";
 
 export default function Navigation() {
   return (
-
     <CredentialsContext.Consumer>
-
       {({ storedCredentials }) => (
-
         <NavigationContainer>
           <MainNavStack />
         </NavigationContainer>
-
       )}
-
     </CredentialsContext.Consumer>
-
   );
 }
 
@@ -46,57 +39,45 @@ const MainNav = createStackNavigator();
 
 function MainNavStack() {
   return (
-
     <CredentialsContext.Consumer>
+      {({ storedCredentials }) =>
+        storedCredentials ? (
+          <MainNav.Navigator>
+            <MainNav.Screen
+              name="Login"
+              component={Login}
+              options={({ navigation }) => ({
+                headerShown: false,
+              })}
+            />
+            <MainNav.Screen
+              name="SignIn"
+              component={SignIn}
+              options={({ navigation }) => ({
+                headerShown: false,
+              })}
+            />
 
-      {
-        ({ storedCredentials }) => (
-
-          storedCredentials ? (
-
-            <MainNav.Navigator>
-              <MainNav.Screen
-                name="Login"
-                component={Login}
-                options={({ navigation }) => ({
-                  headerShown: false,
-                })}
-              />
-              <MainNav.Screen
-                name="SignIn"
-                component={SignIn}
-                options={({ navigation }) => ({
-                  headerShown: false,
-                })}
-              />
-              
-              <MainNav.Screen
-                name="BottomTabNav"
-                component={BottomTabNavigator}
-                options={({ navigation }) => ({
-                  headerShown: false,
-                })}
-              />
-            </MainNav.Navigator>
-
-          ) : (
-
-            <MainNav.Navigator>
-              
-              <MainNav.Screen
-                name="BottomTabNav"
-                component={BottomTabNavigator}
-                options={({ navigation }) => ({
-                  headerShown: false,
-                })}
-              />
-            </MainNav.Navigator>
-
-          )
-
+            <MainNav.Screen
+              name="BottomTabNav"
+              component={BottomTabNavigator}
+              options={({ navigation }) => ({
+                headerShown: false,
+              })}
+            />
+          </MainNav.Navigator>
+        ) : (
+          <MainNav.Navigator>
+            <MainNav.Screen
+              name="BottomTabNav"
+              component={BottomTabNavigator}
+              options={({ navigation }) => ({
+                headerShown: false,
+              })}
+            />
+          </MainNav.Navigator>
         )
       }
-
     </CredentialsContext.Consumer>
   );
 }
@@ -113,13 +94,20 @@ function EventTabStack() {
           headerShown: false,
         })}
       />
-        <EventStack.Screen
-          name="Confirmed"
-          component={Confirmed}
-          options={({ navigation }) => ({
-            headerShown: false,
-          })}
-        />
+      <EventStack.Screen
+        name="Confirmed"
+        component={Confirmed}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
+      <EventStack.Screen
+        name="Perfil - MeeTour"
+        component={ProfileOut}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
       <EventStack.Screen
         name="Event"
         component={Event}
@@ -151,9 +139,10 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
+      }}
+    >
       <BottomTab.Screen
-        name="Início" 
+        name="Início"
         component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,
@@ -165,7 +154,9 @@ function BottomTabNavigator() {
         component={Agenda}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="calendar" color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -184,7 +175,7 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
