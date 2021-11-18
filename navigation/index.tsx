@@ -3,6 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+
 import React, {useEffect} from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,25 +20,20 @@ import Event from '../screens/Event'
 import EventsWent from '../screens/EventsWent'
 import Agenda from '../screens/Agenda'
 import Profile from '../screens/Profile'
+import ProfileOut from '../screens/ProfileOut'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from '../components/CredentialsContext';
+
 
 export default function Navigation() {
   return (
-
     <CredentialsContext.Consumer>
-
       {({ storedCredentials }) => (
-
         <NavigationContainer>
           <MainNavStack />
         </NavigationContainer>
-
       )}
-
     </CredentialsContext.Consumer>
-
   );
 }
 
@@ -45,7 +41,6 @@ const MainNav = createStackNavigator();
 
 function MainNavStack() {
   return (
-
     <CredentialsContext.Consumer>
 
       {
@@ -96,7 +91,6 @@ function MainNavStack() {
 
         )
       }
-
     </CredentialsContext.Consumer>
   );
 }
@@ -120,6 +114,15 @@ function EventTabStack() {
           headerShown: false,
         })}
       />
+
+      <EventStack.Screen
+        name="Perfil - MeeTour"
+        component={ProfileOut}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
+
       <EventStack.Screen
         name="Event"
         component={Event}
@@ -151,7 +154,8 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
+      }}
+    >
       <BottomTab.Screen
         name="Início"
         component={EventTabStack}
@@ -165,7 +169,9 @@ function BottomTabNavigator() {
         component={Agenda}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="calendar" color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -184,7 +190,7 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
