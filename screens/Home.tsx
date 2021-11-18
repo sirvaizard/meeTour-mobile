@@ -7,6 +7,7 @@ import EventCard from '../components/EventCard';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Header from '../components/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext';
 
@@ -120,13 +121,14 @@ const events: Event[] = [
 
 export default function Home(props: any) {
 
+    // const data = AsyncStorage.getItem('meeTourCredentials');
     const [currentEvent, setCurrentEvent] = React.useState<Event>(events[0])
     const [currentIndex, setCurrentIndex] = React.useState(0)
 
     const {storedCredentials} = useContext(CredentialsContext);
 
     function handleSwitchEvent() {
-        console.log(storedCredentials);
+        console.warn(storedCredentials);
         setCurrentEvent(events[(currentIndex + 1) % events.length])
         setCurrentIndex((currentIndex + 1) % events.length)
     }

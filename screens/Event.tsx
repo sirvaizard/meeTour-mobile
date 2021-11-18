@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,27 +6,44 @@ import { Text, View } from '../components/Themed';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+import api from "../services/api";
+import { CredentialsContext } from '../components/CredentialsContext';
+
 import EventCard from '../components/EventCard';
 import BntRectangle from '../components/BtnRectangle';
 import Header from '../components/Header';
-import pinguins from '../assets/images/pinguins.jpg';
+import placeholderImg from '../assets/images/placeholder.jpg';
 
-let placeImages: ImageProps[] = [pinguins, pinguins, pinguins];
+
+let placeImages: ImageProps[] = [placeholderImg, placeholderImg, placeholderImg];
 let array: number[] = [1, 2, 3];
 
 export default function Event({ route, navigation }) {
 
-    function handleConfirmedPeopleBtn() {
-        navigation.navigate('Confirmed');
+    const {storedCredentials} = useContext(CredentialsContext);
+
+    async function handleConfirmBtn(id: number) {
+
+        // console.warn(storedCredentials.token);
+
+        await api.post(`/event/${id}/join`, {}, 
+            {headers: {
+                Authorization: 'Bearer ' + storedCredentials.token
+            }})
+            .then( () => navigation.navigate('Agenda'))    
+            .catch(err => {
+                console.warn(err);
+            })
+
     }
 
     function handleCancelBtn() {
         navigation.navigate('Home');
     }
 
-    function handleConfirmBtn() {
+    function handleConfirmedPeopleBtn() {
         // console.log("Navigate to schedule screen");
-        navigation.navigate('Agenda');
+        navigation.navigate('Confirmed');
     }
 
     function handleSeeAllImages() {
@@ -42,7 +59,7 @@ export default function Event({ route, navigation }) {
 
             <BntRectangle
                 route={route}
-                number={route.params.event.confirmed} 
+                number={route.params.event.confirmed}
                 text="Pessoas confirmaram presença"
                 callback={handleConfirmedPeopleBtn}
             />
@@ -72,7 +89,7 @@ export default function Event({ route, navigation }) {
                     <Ionicons name="close" size={48} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnCircle} onPress={handleConfirmBtn}>
+                <TouchableOpacity style={styles.btnCircle} onPress={() => handleConfirmBtn(5)}>
                     <LinearGradient
                         colors={['#6951FF', '#8A94F0']}
                         style={{
@@ -178,14 +195,6 @@ const styles = StyleSheet.create({
         borderLeftWidth: 3,
         borderRightWidth: 1,
 
-        // shadowColor: "#000",
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 2,
-        // },
-        // shadowOpacity: 0.25,
-        // shadowRadius: 3.84,
-        // elevation: 5,
     },
 
 });

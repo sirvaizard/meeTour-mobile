@@ -16,9 +16,7 @@ export default function App() {
       .then(res => {
         if (res !== null) {
           setStoredCredentials(JSON.parse(res));
-        }/* else{
-          setStoredCredentials("");
-        } */
+        }
       })
       .catch(err => console.log(err));
   }
@@ -52,22 +50,3 @@ export default function App() {
   }
 
 }
-
-//app original
-/* export default function App() {
-  const isLoadingComplete = useCachedResources();
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-
-    return (
-
-      <SafeAreaProvider>
-        <Navigation />
-      </SafeAreaProvider>
-
-    );
-
-  }
-} */

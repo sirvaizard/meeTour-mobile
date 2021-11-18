@@ -78,7 +78,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
                         minimumTrackTintColor="#8A94F0"
                         maximumValue={100}
                         minimumValue={0}
-                        step={1}
+                        step={.5}
                         value={sliderValue}
                         onValueChange={setSliderValue}
                     />

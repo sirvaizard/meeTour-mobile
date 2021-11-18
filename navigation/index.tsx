@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,9 +20,8 @@ import EventsWent from '../screens/EventsWent'
 import Agenda from '../screens/Agenda'
 import Profile from '../screens/Profile'
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from '../components/CredentialsContext';
-
-
 
 export default function Navigation() {
   return (
@@ -55,6 +54,20 @@ function MainNavStack() {
           storedCredentials ? (
 
             <MainNav.Navigator>
+
+              <MainNav.Screen
+                name="BottomTabNav"
+                component={BottomTabNavigator}
+                options={({ navigation }) => ({
+                  headerShown: false,
+                })}
+              />
+            </MainNav.Navigator>
+
+          ) : (
+
+            <MainNav.Navigator>
+
               <MainNav.Screen
                 name="Login"
                 component={Login}
@@ -69,20 +82,7 @@ function MainNavStack() {
                   headerShown: false,
                 })}
               />
-              
-              <MainNav.Screen
-                name="BottomTabNav"
-                component={BottomTabNavigator}
-                options={({ navigation }) => ({
-                  headerShown: false,
-                })}
-              />
-            </MainNav.Navigator>
 
-          ) : (
-
-            <MainNav.Navigator>
-              
               <MainNav.Screen
                 name="BottomTabNav"
                 component={BottomTabNavigator}
@@ -113,13 +113,13 @@ function EventTabStack() {
           headerShown: false,
         })}
       />
-        <EventStack.Screen
-          name="Confirmed"
-          component={Confirmed}
-          options={({ navigation }) => ({
-            headerShown: false,
-          })}
-        />
+      <EventStack.Screen
+        name="Confirmed"
+        component={Confirmed}
+        options={({ navigation }) => ({
+          headerShown: false,
+        })}
+      />
       <EventStack.Screen
         name="Event"
         component={Event}
@@ -153,7 +153,7 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Início" 
+        name="Início"
         component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,
