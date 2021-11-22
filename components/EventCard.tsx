@@ -1,6 +1,6 @@
 import { StyleSheet, Image, ImageProps } from 'react-native';
 import { Text, View } from '../components/Themed';
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -11,11 +11,13 @@ export interface Props {
 
 interface Event {
     name: string,
-    location: string,
-    address: string,
-    date: string,
+    location: {
+        address: string,
+        image: string,
+        name: string
+    }
+    begin: string,
     distance: string,
-    image: string,
     description: string,
     confirmed: number
 }
@@ -69,26 +71,28 @@ const styles = StyleSheet.create({
 
 export default function EventCard(props: Props) {
 
+    useEffect(() => console.log(props), []);
+
     return (
         <>
             <View >
                 <View style={styles.eventInfo}>
                     <View>
-                        <Image source={{uri: props.event.image}} style={styles.image} />
+                        <Image source={{uri: props.event.location.image}} style={styles.image} />
                     </View>
                     <View style={styles.eventTitleContainer}>
                         <Text style={styles.eventTitle}>{props.event.name}</Text>
                     </View>
                     <View style={styles.locationContainer}>
-                        <Text style={styles.locationName}>{props.event.location}</Text>
-                        <Text style={styles.distanceText}>{props.event.distance}</Text>
+                        <Text style={styles.locationName}>{props.event.location.name}</Text>
+                        <Text style={styles.distanceText}> 1km </Text>
                     </View>
                     <View style={styles.locationContainer}>
                         <View style={styles.addressContainer}>
                             <Ionicons name="location-sharp" size={24} color="black" style={{ marginRight: 4 }} />
-                            <Text>{props.event.address}</Text>
+                            <Text>{props.event.location.address}</Text>
                         </View>
-                        <Text>{props.event.date}</Text>
+                        <Text>{new Date(props.event.begin).toLocaleDateString('pt-BR')}</Text>
                     </View>
                 </View>
             </View>

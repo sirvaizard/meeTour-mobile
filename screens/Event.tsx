@@ -18,13 +18,11 @@ import placeholderImg from '../assets/images/placeholder.jpg';
 let placeImages: ImageProps[] = [placeholderImg, placeholderImg, placeholderImg];
 let array: number[] = [1, 2, 3];
 
-export default function Event({ route, navigation }) {
+export default function Event({ route, navigation }: {route: any, navigation: any}) {
 
     const {storedCredentials} = useContext(CredentialsContext);
 
     async function handleConfirmBtn(id: number) {
-
-        // console.warn(storedCredentials.token);
 
         await api.post(`/event/${id}/join`, {}, 
             {headers: {
@@ -34,13 +32,12 @@ export default function Event({ route, navigation }) {
             .catch(err => {
                 console.warn(err);
             })
-
-    }
+    } 
 
     function handleCancelBtn() {
         navigation.navigate('Home');
     }
-
+ 
     function handleConfirmedPeopleBtn() {
         // console.log("Navigate to schedule screen");
         navigation.navigate('Confirmed');
@@ -48,7 +45,7 @@ export default function Event({ route, navigation }) {
 
     function handleSeeAllImages() {
         // console.log("Show all instagram images");
-    }
+    } 
 
     return (
         <ScrollView style={styles.container}>
@@ -59,7 +56,7 @@ export default function Event({ route, navigation }) {
 
             <BntRectangle
                 route={route}
-                number={route.params.event.confirmed}
+                number={route.params.event.attendees.length}
                 text="Pessoas confirmaram presença"
                 callback={handleConfirmedPeopleBtn}
             />
@@ -89,7 +86,7 @@ export default function Event({ route, navigation }) {
                     <Ionicons name="close" size={48} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnCircle} onPress={() => handleConfirmBtn(5)}>
+                <TouchableOpacity style={styles.btnCircle} onPress={() => handleConfirmBtn(route.params.event.id)}>
                     <LinearGradient
                         colors={['#6951FF', '#8A94F0']}
                         style={{
