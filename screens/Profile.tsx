@@ -4,23 +4,23 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from '../components/Themed';
 import { Ionicons } from "@expo/vector-icons";
 //https://snack.expo.dev/@miblanchard/@miblanchard-react-native-slider
-// import { Slider } from "@miblanchard/react-native-slider";
+import { Slider } from "@miblanchard/react-native-slider";
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import BntRectangle from '../components/BtnRectangle';
 
-import mercadola from '../assets/images/mercadola.jpg'
-
 import api from "../services/api";
 import { CredentialsContext } from '../components/CredentialsContext';
 import User from '../interfaces/user';
+
+const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asset/e5cf8466bc6f/sub-buzz-11718-1591678685-12.png"
 
 export default function Profile({ route, navigation }: { route: any, navigation: any }) {
 
     const { storedCredentials } = useContext(CredentialsContext);
     const defaultSliderValue = 150; //to do: api call here
     const [sliderValue, setSliderValue] = React.useState<any>(defaultSliderValue);
-    const [userInfo, setUserInfo] = useState<User>(); //to do: change this in the profileOut also
+    const [userInfo, setUserInfo] = useState<User>(); 
 
     function handleEventsWent() {
         navigation.navigate('EventsWent');
@@ -30,8 +30,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
         console.warn(sliderValue);
     }
 
-    useEffect(() => {
-
+    function loadUserInfo() {
         console.log("--------------------------------#");
         console.log(storedCredentials.token);
 
@@ -48,7 +47,14 @@ export default function Profile({ route, navigation }: { route: any, navigation:
                 })
                 .catch(error => console.log(error));
         }
+    }
 
+    useEffect(() => {
+        loadUserInfo();
+    }, []);
+
+    useEffect(() => {
+        loadUserInfo();
     }, [storedCredentials]);
 
     return (
@@ -57,7 +63,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
             <View style={styles.header} />
 
             <View style={styles.bioContainer}>
-                <Image source={mercadola} style={styles.image} />
+                <Image source={{ uri: avatar }} style={styles.image} />
                 <Text style={styles.name}>Adalberto Shindy, 23</Text>
                 <Text style={styles.bio}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum.</Text>
             </View>
@@ -96,7 +102,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
 
                     <Text style={styles.sliderValue}>{sliderValue}km</Text>
 
-                    {/* <Slider
+                    <Slider
                         animateTransitions
                         thumbTintColor="#5942ee"
                         maximumTrackTintColor="#c9c1fd"
@@ -106,7 +112,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
                         step={.5}
                         value={sliderValue}
                         onValueChange={setSliderValue}
-                    /> */}
+                    />
                 </View>
 
                 <TouchableOpacity

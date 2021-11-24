@@ -1,51 +1,51 @@
-import * as React from "react";
-import {
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import React, { useCallback, useContext, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { StyleSheet, Image, TouchableOpacity, ScrollView} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
+import User from '../interfaces/user';
+
+const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asset/e5cf8466bc6f/sub-buzz-11718-1591678685-12.png"
 
 const confirmeds = [
   {
     id: "1",
     name: "Adalberto Shindy",
-    avatar: "https://source.unsplash.com/weekly?avatar&shindy"
   },
   {
     id: "2",
     name: "Luiz Felipe",
-    avatar: "https://source.unsplash.com/weekly?avatar&luiz"
   },
   {
     id: "3",
     name: "Bruno Contreras",
-    avatar: "https://source.unsplash.com/weekly?avatar&bruno"
   },
   {
     id: "4",
     name: "Daniel Chang",
-    avatar: "https://source.unsplash.com/weekly?avatar&daniel"
   },
   {
     id: "5",
     name: "Lucas M Sales",
-    avatar: "https://source.unsplash.com/weekly?avatar&lucas"
   },
   {
     id: "6",
     name: "Victor Lopes",
-    avatar: "https://source.unsplash.com/weekly?avatar&victor"
   },
 ];
 
-export default function Confirmed({ route, navigation }: { route: any; navigation: any; }) {
+export default function Confirmed({ route, navigation }: { route: any, navigation: any; }) {
 
-  function handleNavigateTo(confirmed: {id: string, name: string, avatar: string}) {
+  const [participants, setParticipants] = useState<User[]>([]);
+
+  function handleNavigateTo(confirmed: { id: number }) {
     navigation.navigate('Perfil - MeeTour', { id: confirmed.id });
   }
+
+  useFocusEffect(useCallback(() => {
+    console.log(route.params.participants);
+    setParticipants(route.params.participants);
+  }, []));
 
   return (
     <ScrollView style={styles.container}>
@@ -58,7 +58,7 @@ export default function Confirmed({ route, navigation }: { route: any; navigatio
           <TouchableOpacity onPress={() => handleNavigateTo(confirmed)}>
             <View style={styles.ConfirmedContent}>
               <View style={styles.AvatarNameGroup}>
-                <Image source={{ uri: confirmed.avatar }} style={styles.image} />
+                <Image source={{ uri: avatar }} style={styles.image} />
                 <Text style={styles.ConfirmedName}>{confirmed.name}</Text>
               </View>
               <Ionicons name="chatbubble-ellipses-outline" size={25} color="#6951FF" />

@@ -27,7 +27,7 @@ export default function Home(props: any) {
     }
 
     function handleConfirmEvent() {
-        props.navigation.navigate('Event', { event: currentEvent });
+        props.navigation.navigate('Event', { event: currentEvent, mode: "register" });
     }
 
     useEffect(() => {

@@ -1,4 +1,5 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from '../components/Themed';
@@ -7,16 +8,42 @@ import { Ionicons } from "@expo/vector-icons";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import BntRectangle from '../components/BtnRectangle';
 
-import mercadola from '../assets/images/mercadola.jpg'
+import api from "../services/api";
+import { CredentialsContext } from '../components/CredentialsContext';
+import User from '../interfaces/user';
 
+const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asset/e5cf8466bc6f/sub-buzz-11718-1591678685-12.png"
 
 export default function Profile({ route, navigation }: { route: any, navigation: any }) {
 
-    const { id } = route.params
+    const { id } = route.params;
+    const { storedCredentials } = useContext(CredentialsContext);
+    const [userInfo, setUserInfo] = useState<User>(); 
 
     function handleEventsWent() {
         navigation.navigate('EventsWent');
     }
+
+    function loadUserInfo() {
+        console.log("-------------------------------- id:" + id);
+        console.log(storedCredentials.token);
+
+        if (storedCredentials) {
+            api.get(`/user/${id}`,
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + storedCredentials.token
+                    }
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    setUserInfo(res.data);
+                })
+                .catch(error => console.log(error));
+        }
+    }
+
+    useFocusEffect(useCallback(loadUserInfo, []));
 
     return (
         <ScrollView style={styles.container}>
@@ -24,7 +51,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
             <View style={styles.header} />
 
             <View style={styles.bioContainer}>
-                <Image source={mercadola} style={styles.image} />
+                <Image source={{ uri: avatar }} style={styles.image} />
                 <Text style={styles.name}>Adalberto Shindy, id: {id}</Text>
                 <Text style={styles.bio}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum.</Text>
             </View>

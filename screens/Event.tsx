@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,52 +18,54 @@ import placeholderImg from '../assets/images/placeholder.jpg';
 let placeImages: ImageProps[] = [placeholderImg, placeholderImg, placeholderImg];
 let array: number[] = [1, 2, 3];
 
-export default function Event({ route, navigation }: {route: any, navigation: any}) {
+export default function Event({ route, navigation }: { route: any, navigation: any }) {
 
-    const {storedCredentials} = useContext(CredentialsContext);
+    const { event, mode } = route.params;
+    const { storedCredentials } = useContext(CredentialsContext);
 
     async function handleConfirmBtn(id: number) {
 
-        await api.post(`/event/${id}/join`, {}, 
-            {headers: {
-                Authorization: 'Bearer ' + storedCredentials.token
-            }})
-            .then( () => navigation.navigate('Agenda'))    
+        await api.post(`/event/${id}/join`, {},
+            {
+                headers: {
+                    Authorization: 'Bearer ' + storedCredentials.token
+                }
+            })
+            .then(() => navigation.navigate('Agenda'))
             .catch(err => {
                 console.warn(err);
             })
-    } 
+    }
 
     function handleCancelBtn() {
         navigation.navigate('Home');
     }
- 
+
     function handleConfirmedPeopleBtn() {
-        // console.log("Navigate to schedule screen");
-        navigation.navigate('Confirmed');
+        navigation.navigate('Confirmed', { participants: event.attendees });
     }
 
     function handleSeeAllImages() {
         // console.log("Show all instagram images");
-    } 
+    }
 
     return (
         <ScrollView style={styles.container}>
 
             <Header />
 
-            <EventCard event={route.params.event} />
+            <EventCard event={event} />
 
             <BntRectangle
                 route={route}
-                number={route.params.event.attendees.length}
+                number={event.attendees.length}
                 text="Pessoas confirmaram presença"
                 callback={handleConfirmedPeopleBtn}
             />
 
             <View style={styles.descriptionContainer}>
                 <Text style={styles.descriptionTitle}>Descrição do Evento</Text>
-                <Text>{route.params.event.description}</Text>
+                <Text>{event.description}</Text>
             </View>
 
             <View style={styles.placeImagesSection}>
@@ -81,26 +83,30 @@ export default function Event({ route, navigation }: {route: any, navigation: an
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.btnCircle} onPress={handleCancelBtn}>
-                    <Ionicons name="close" size={48} color="black" />
-                </TouchableOpacity>
+            {mode !== "view" &&
 
-                <TouchableOpacity style={styles.btnCircle} onPress={() => handleConfirmBtn(route.params.event.id)}>
-                    <LinearGradient
-                        colors={['#6951FF', '#8A94F0']}
-                        style={{
-                            width: wp('25%'),
-                            height: wp('25%'),
-                            borderRadius: 100,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Ionicons name="checkmark" size={48} color="white" />
-                    </LinearGradient>
-                </TouchableOpacity>
-            </View>
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity style={styles.btnCircle} onPress={handleCancelBtn}>
+                        <Ionicons name="close" size={48} color="black" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btnCircle} onPress={() => handleConfirmBtn(event.id)}>
+                        <LinearGradient
+                            colors={['#6951FF', '#8A94F0']}
+                            style={{
+                                width: wp('25%'),
+                                height: wp('25%'),
+                                borderRadius: 100,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Ionicons name="checkmark" size={48} color="white" />
+                        </LinearGradient>
+                    </TouchableOpacity>
+                </View>
+
+            }
 
 
         </ScrollView>

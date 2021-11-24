@@ -33,7 +33,7 @@ export default function Agenda({ route, navigation }: {route: any, navigation: a
     }, []));
    
     function handleShowEvent(eventTo: Event) {
-        navigation.navigate('Event', { event: eventTo });
+        navigation.navigate('Event', { event: eventTo, mode: "view" });
     }
 
     return (

@@ -157,7 +157,7 @@ function BottomTabNavigator() {
       }}
     >
       <BottomTab.Screen
-        name="Início"
+        name="Principal"
         component={EventTabStack}
         options={({ navigation }) => ({
           headerShown: false,
