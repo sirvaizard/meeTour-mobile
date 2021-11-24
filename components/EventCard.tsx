@@ -1,26 +1,15 @@
-import { StyleSheet, Image, ImageProps } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import React, {useEffect} from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
+import Event from '../interfaces/events';
+
 export interface Props {
     event: Event,
 } 
-
-interface Event {
-    name: string,
-    location: {
-        address: string,
-        image: string,
-        name: string
-    }
-    begin: string,
-    distance: string,
-    description: string,
-    confirmed: number
-}
 
 const styles = StyleSheet.create({
     eventInfo: {

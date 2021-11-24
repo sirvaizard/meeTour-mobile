@@ -1,26 +1,16 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, Image, TouchableOpacity, ImageProps, ScrollView } from 'react-native';
-import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
+import { StyleSheet, TouchableOpacity} from 'react-native';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Text, View } from '../components/Themed';
+import { View } from '../components/Themed';
 import EventCard from '../components/EventCard';
-import { RFPercentage } from "react-native-responsive-fontsize";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Header from '../components/Header';
 
 import { CredentialsContext } from '../components/CredentialsContext';
 import api from "../services/api";
 
-interface Event {
-    name: string,
-    location: string,
-    address: string,
-    begin: string,
-    distance: string,
-    image: string,
-    description: string,
-    confirmed: number // tem q trocar isso depois pra um obj/array com todos os confirmados
-}
+import Event from '../interfaces/events';
 
 export default function Home(props: any) {
 

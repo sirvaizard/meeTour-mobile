@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from '../components/Themed';
 import { Ionicons } from "@expo/vector-icons";
 //https://snack.expo.dev/@miblanchard/@miblanchard-react-native-slider
-import { Slider } from "@miblanchard/react-native-slider";
+// import { Slider } from "@miblanchard/react-native-slider";
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import BntRectangle from '../components/BtnRectangle';
 
 import mercadola from '../assets/images/mercadola.jpg'
 
+import api from "../services/api";
+import { CredentialsContext } from '../components/CredentialsContext';
+import User from '../interfaces/user';
 
 export default function Profile({ route, navigation }: { route: any, navigation: any }) {
+
+    const { storedCredentials } = useContext(CredentialsContext);
+    const defaultSliderValue = 150; //to do: api call here
+    const [sliderValue, setSliderValue] = React.useState<any>(defaultSliderValue);
+    const [userInfo, setUserInfo] = useState<User>(); //to do: change this in the profileOut also
 
     function handleEventsWent() {
         navigation.navigate('EventsWent');
@@ -22,9 +30,26 @@ export default function Profile({ route, navigation }: { route: any, navigation:
         console.warn(sliderValue);
     }
 
-    const defaultSliderValue = 150; //to do: api call here
+    useEffect(() => {
 
-    const [sliderValue, setSliderValue] = React.useState<any>(defaultSliderValue);
+        console.log("--------------------------------#");
+        console.log(storedCredentials.token);
+
+        if (storedCredentials) {
+            api.get(`/user`,
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + storedCredentials.token
+                    }
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    setUserInfo(res.data);
+                })
+                .catch(error => console.log(error));
+        }
+
+    }, [storedCredentials]);
 
     return (
         <ScrollView style={styles.container}>
@@ -67,11 +92,11 @@ export default function Profile({ route, navigation }: { route: any, navigation:
 
 
                 <View style={styles.sliderContainer}>
-                    <Text style={styles.sliderContainerTitle}>Raio de busca por eventos</Text>
+                    {/* <Text style={styles.sliderContainerTitle}>Raio de busca por eventos</Text> */}
 
                     <Text style={styles.sliderValue}>{sliderValue}km</Text>
 
-                    <Slider
+                    {/* <Slider
                         animateTransitions
                         thumbTintColor="#5942ee"
                         maximumTrackTintColor="#c9c1fd"
@@ -81,7 +106,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
                         step={.5}
                         value={sliderValue}
                         onValueChange={setSliderValue}
-                    />
+                    /> */}
                 </View>
 
                 <TouchableOpacity
@@ -191,10 +216,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         borderRadius: 5,
     },
-    saveChangesBtnEnabled:{
-        backgroundColor:'#6951FF'
+    saveChangesBtnEnabled: {
+        backgroundColor: '#6951FF'
     },
-    saveChangesBtnDisabled:{
+    saveChangesBtnDisabled: {
         backgroundColor: '#646464'
     },
     saveChangesBtnText: {

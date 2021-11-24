@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from '../components/Themed';
