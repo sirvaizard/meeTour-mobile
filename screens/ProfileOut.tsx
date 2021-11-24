@@ -41,7 +41,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
             <View style={styles.bioContainer}>
                 <Image source={{ uri: avatar }} style={styles.image} />
                 <Text style={styles.name}>{userInfo.name}</Text>
-                <Text style={styles.bio}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum.</Text>
+                <Text style={styles.bio}>{userInfo.bio}</Text>
             </View>
 
             <BntRectangle

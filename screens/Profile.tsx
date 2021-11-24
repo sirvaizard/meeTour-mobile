@@ -20,7 +20,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
     const { storedCredentials } = useContext(CredentialsContext);
     const defaultSliderValue = 150; //to do: api call here
     const [sliderValue, setSliderValue] = React.useState<any>(defaultSliderValue);
-    const [userInfo, setUserInfo] = useState<User>(); 
+    const [userInfo, setUserInfo] = useState<User>({}); 
 
     function handleEventsWent() {
         navigation.navigate('EventsWent');
@@ -32,7 +32,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
 
     function loadUserInfo() {
         console.log("--------------------------------#");
-        console.log(storedCredentials.token);
+        console.log(storedCredentials);
 
         if (storedCredentials) {
             api.get(`/user/${storedCredentials.id}`,
@@ -49,13 +49,13 @@ export default function Profile({ route, navigation }: { route: any, navigation:
         }
     }
 
-    // useEffect(() => {
-    //     loadUserInfo();
-    // }, []);
+    useEffect(() => {
+        loadUserInfo();
+    }, []);
 
-    // useEffect(() => {
-    //     loadUserInfo();
-    // }, [storedCredentials]);
+    useEffect(() => {
+        loadUserInfo();
+    }, [storedCredentials]);
 
     return (
         <ScrollView style={styles.container}>
@@ -64,13 +64,13 @@ export default function Profile({ route, navigation }: { route: any, navigation:
 
             <View style={styles.bioContainer}>
                 <Image source={{ uri: avatar }} style={styles.image} />
-                <Text style={styles.name}>Adalberto Shindy, 23</Text>
-                <Text style={styles.bio}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum.</Text>
+                <Text style={styles.name}>{userInfo.name}</Text>
+                <Text style={styles.bio}>{userInfo.bio}</Text>
             </View>
 
             <BntRectangle
                 route={route}
-                number={15}
+                number={2}
                 text="Eventos participados"
                 callback={handleEventsWent}
             />
@@ -98,7 +98,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
 
 
                 <View style={styles.sliderContainer}>
-                    {/* <Text style={styles.sliderContainerTitle}>Raio de busca por eventos</Text> */}
+                    <Text style={styles.sliderContainerTitle}>Raio de busca por eventos</Text>
 
                     <Text style={styles.sliderValue}>{sliderValue}km</Text>
 
