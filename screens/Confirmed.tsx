@@ -7,39 +7,12 @@ import User from '../interfaces/user';
 
 const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asset/e5cf8466bc6f/sub-buzz-11718-1591678685-12.png"
 
-const confirmeds = [
-  {
-    id: "1",
-    name: "Adalberto Shindy",
-  },
-  {
-    id: "2",
-    name: "Luiz Felipe",
-  },
-  {
-    id: "3",
-    name: "Bruno Contreras",
-  },
-  {
-    id: "4",
-    name: "Daniel Chang",
-  },
-  {
-    id: "5",
-    name: "Lucas M Sales",
-  },
-  {
-    id: "6",
-    name: "Victor Lopes",
-  },
-];
-
 export default function Confirmed({ route, navigation }: { route: any, navigation: any; }) {
 
   const [participants, setParticipants] = useState<User[]>([]);
 
-  function handleNavigateTo(confirmed: { id: number }) {
-    navigation.navigate('Perfil - MeeTour', { id: confirmed.id });
+  function handleNavigateTo( userInfo: User ) {
+    navigation.navigate('Perfil - MeeTour', { userInfo: userInfo });
   }
 
   useFocusEffect(useCallback(() => {
@@ -53,7 +26,7 @@ export default function Confirmed({ route, navigation }: { route: any, navigatio
         <Text style={styles.logoTitle}>Confirmados</Text>
       </View>
 
-      {confirmeds.map((confirmed, index) => (
+      {participants.map((confirmed, index) => (
         <View key={index} style={styles.ConfirmedContainer}>
           <TouchableOpacity onPress={() => handleNavigateTo(confirmed)}>
             <View style={styles.ConfirmedContent}>

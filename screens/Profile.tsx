@@ -35,7 +35,7 @@ export default function Profile({ route, navigation }: { route: any, navigation:
         console.log(storedCredentials.token);
 
         if (storedCredentials) {
-            api.get(`/user`,
+            api.get(`/user/${storedCredentials.id}`,
                 {
                     headers: {
                         Authorization: 'Bearer ' + storedCredentials.token
@@ -49,13 +49,13 @@ export default function Profile({ route, navigation }: { route: any, navigation:
         }
     }
 
-    useEffect(() => {
-        loadUserInfo();
-    }, []);
+    // useEffect(() => {
+    //     loadUserInfo();
+    // }, []);
 
-    useEffect(() => {
-        loadUserInfo();
-    }, [storedCredentials]);
+    // useEffect(() => {
+    //     loadUserInfo();
+    // }, [storedCredentials]);
 
     return (
         <ScrollView style={styles.container}>

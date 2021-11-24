@@ -16,31 +16,19 @@ const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asse
 
 export default function Profile({ route, navigation }: { route: any, navigation: any }) {
 
-    const { id } = route.params;
     const { storedCredentials } = useContext(CredentialsContext);
-    const [userInfo, setUserInfo] = useState<User>(); 
+    const [userInfo, setUserInfo] = useState<User>({}); 
 
     function handleEventsWent() {
         navigation.navigate('EventsWent');
     }
 
     function loadUserInfo() {
-        console.log("-------------------------------- id:" + id);
-        console.log(storedCredentials.token);
+        console.log("--------------------------------");
+        console.log(route.params);
 
-        if (storedCredentials) {
-            api.get(`/user/${id}`,
-                {
-                    headers: {
-                        Authorization: 'Bearer ' + storedCredentials.token
-                    }
-                })
-                .then((res) => {
-                    console.log(res.data);
-                    setUserInfo(res.data);
-                })
-                .catch(error => console.log(error));
-        }
+        setUserInfo(route.params.userInfo);
+        
     }
 
     useFocusEffect(useCallback(loadUserInfo, []));
@@ -52,13 +40,13 @@ export default function Profile({ route, navigation }: { route: any, navigation:
 
             <View style={styles.bioContainer}>
                 <Image source={{ uri: avatar }} style={styles.image} />
-                <Text style={styles.name}>Adalberto Shindy, id: {id}</Text>
+                <Text style={styles.name}>{userInfo.name}</Text>
                 <Text style={styles.bio}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ante turpis. Etiam porta auctor lectus ut dictum.</Text>
             </View>
 
             <BntRectangle
                 route={route}
-                number={15}
+                number={2}
                 text="Eventos participados"
                 callback={handleEventsWent}
             />
