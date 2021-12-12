@@ -1,6 +1,6 @@
+import React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
-import React, {useEffect} from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -12,7 +12,11 @@ export interface Props {
 } 
 
 const styles = StyleSheet.create({
+    componentContainer: {
+        backgroundColor: '#fff',
+    },
     eventInfo: {
+        backgroundColor: '#fff',
         marginHorizontal: wp('3%'),
         paddingHorizontal: wp('2%'),
         padding: wp('2%'),
@@ -27,24 +31,33 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     locationContainer: {
+        backgroundColor: '#fff',
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
         marginBottom: hp('1%'),
         paddingHorizontal: wp('3%')
     },
     addressContainer: {
+        backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
     },
+    addressText:{
+        color: 'black'
+    },
     locationName: {
+        color: 'black',
         fontSize: RFPercentage(2.5),
         fontWeight: 'bold',
     },
     eventTitleContainer: {
+        backgroundColor: '#fff',
         marginVertical: hp('2.5%'),
         paddingHorizontal: wp('3%')
     },
     eventTitle: {
+        color: 'black',
         fontSize: RFPercentage(3.5),
         fontWeight: 'bold',
     },
@@ -55,16 +68,17 @@ const styles = StyleSheet.create({
     distanceText: {
         color: '#6951FF',
         fontWeight: 'bold'
+    },
+    dateText: {
+        color: 'black'
     }
 });
 
 export default function EventCard(props: Props) {
 
-    useEffect(() => console.log(props), []);
-
     return (
         <>
-            <View >
+            <View style={styles.componentContainer}>
                 <View style={styles.eventInfo}>
                     <View>
                         <Image source={{uri: props.event.location.image}} style={styles.image} />
@@ -79,9 +93,9 @@ export default function EventCard(props: Props) {
                     <View style={styles.locationContainer}>
                         <View style={styles.addressContainer}>
                             <Ionicons name="location-sharp" size={24} color="black" style={{ marginRight: 4 }} />
-                            <Text>{props.event.location.address}</Text>
+                            <Text style={styles.addressText}>{props.event.location.address}</Text>
                         </View>
-                        <Text>{new Date(props.event.begin).toLocaleDateString('pt-BR')}</Text>
+                        <Text style={styles.dateText}>{new Date(props.event.begin).toLocaleDateString('pt-BR')}</Text>
                     </View>
                 </View>
             </View>

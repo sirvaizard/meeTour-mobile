@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import { Text } from '../components/Themed';
@@ -19,17 +19,32 @@ export default function SignIn({ navigation }: { navigation: any }) {
         navigation.navigate('Login');
     }
 
-    async function onSubmit(data: { name: string, email: string, cpf: string, birth: string, password: string }) {
+    async function onSubmit(data: { name: string, email: string, cpf: string, birth: string, password: string, bio: string }) {
 
         //setting the form data to meet the api formats
-        const dateComponents = data.birth.split('/');
-        const isoDate = new Date( `${dateComponents[2]}-${dateComponents[1]}-${dateComponents[0]}` );
+        const dateComponents: any[] = data.birth.split('/');
+        let isoDate: Date;
+        const todayYear: any = new Date().getFullYear();
+
+        //to do: check the minimum birth in a better way
+        if(todayYear - dateComponents[2] > 110 || todayYear - dateComponents[2] < 18){
+            alert("Algo deu errado - Cheque sua data de nascimento, é preciso ter idade maior que 18 anos.");
+            return;
+        }
+
+        try{
+            isoDate = new Date( `${dateComponents[2]}-${dateComponents[1]}-${dateComponents[0]}` );
+        }catch(err){
+            console.log(err)
+            alert("Algo deu errado - Cheque sua data de nascimento");
+            return;
+        }
+
 
         //the function replaceAll didn't work on android
         let cleanedCPF = data.cpf.replace('.', '');
         cleanedCPF = cleanedCPF.replace('.', '');
         cleanedCPF = cleanedCPF.replace('-', '');
-
 
         await api.post("/user",
             {
@@ -37,17 +52,17 @@ export default function SignIn({ navigation }: { navigation: any }) {
                 email: data.email,
                 cpf: cleanedCPF,
                 birth: isoDate,
-                password: data.password
+                password: data.password,
+                bio: data.bio
             }
         )
             .then(response => {
-                console.log(response);
                 alert("Conta criada com sucesso!");
                 navigation.navigate('Login');
             })
             .catch(err => {
                 console.log(err);
-                alert("Erro interno :/ \nTente novamente mais tarde!");
+                alert("Erro interno :/ \n Email e/ou CPF inválidos");
             })
     }
 
@@ -187,6 +202,30 @@ export default function SignIn({ navigation }: { navigation: any }) {
 
             {errors.password && <Text style={styles.error}>{errors.password?.message}</Text>}
 
+            <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                        placeholder="Bio - Uma frase que diga um pouco sobre você :)"
+                        style={[styles.input, styles.inputMultiLine]}
+                        onBlur={onBlur}
+                        multiline={true}
+                        onChangeText={value => onChange(value)}
+                        value={value !== undefined ? value : ''}
+                    />
+                )}
+                name="bio"
+                rules={{
+                    required: { value: true, message: "Insira um texto válido" },
+                    maxLength: {
+                        value: 60,
+                        message: 'Use no máximo 60 caracteres'
+                    }
+                }}
+            />
+
+            {errors.bio && <Text style={styles.error}>{errors.bio.message}</Text>}
+
             <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
                 <LinearGradient
                     colors={['#6951FF', '#8A94F0']}
@@ -279,6 +318,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 8,
         marginVertical: 8
+    },
+    inputMultiLine: {
+        height: 100,
     },
 
 

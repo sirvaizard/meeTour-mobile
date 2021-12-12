@@ -18,22 +18,22 @@ const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asse
 export default function Profile({ route, navigation }: { route: any, navigation: any }) {
 
     const { storedCredentials } = useContext(CredentialsContext);
-    const defaultSliderValue = 150; //to do: api call here
+    const defaultSliderValue = 150; //to do: api call to load the user specifc value
     const [sliderValue, setSliderValue] = React.useState<any>(defaultSliderValue);
-    const [userInfo, setUserInfo] = useState<User>({}); 
+    const [userInfo, setUserInfo] = useState<User>({ name: "", bio: "", cpf: "", birth: "", email: "", id: -1}); 
 
     function handleEventsWent() {
         navigation.navigate('EventsWent');
     }
 
     function handleSaveChanges() {
-        console.warn(sliderValue);
+        //to do: call the api to save the changes save the changes 
+        console.log(sliderValue);
     }
 
     function loadUserInfo() {
-        console.log("--------------------------------#");
-        console.log(storedCredentials);
 
+        // to do: handle the errors in a better way
         if (storedCredentials) {
             api.get(`/user/${storedCredentials.id}`,
                 {
@@ -42,7 +42,6 @@ export default function Profile({ route, navigation }: { route: any, navigation:
                     }
                 })
                 .then((res) => {
-                    console.log(res.data);
                     setUserInfo(res.data);
                 })
                 .catch(error => console.log(error));
@@ -148,6 +147,7 @@ const styles = StyleSheet.create({
 
     },
     bioContainer: {
+        backgroundColor: 'white',
         width: wp('100%'),
         alignItems: 'center',
         marginBottom: 15
@@ -160,15 +160,18 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     name: {
+        color: 'black',
         fontSize: RFPercentage(3),
         fontWeight: 'bold'
     },
     bio: {
+        color: 'black',
         paddingHorizontal: wp('7%'),
         marginTop: 10,
         textAlign: 'center'
     },
     interestsContainer: {
+        backgroundColor: 'white',
         width: wp('100%'),
         padding: wp('5%')
     },
@@ -179,12 +182,14 @@ const styles = StyleSheet.create({
 
     },
     interestsBtnsContainer: {
+        backgroundColor: 'white',
         width: wp('90%'),
         marginTop: 10,
         justifyContent: 'space-evenly',
         flexDirection: 'row',
     },
     btnInterest: {
+        backgroundColor: 'white',
         alignItems: 'center',
         textAlign: 'center',
         width: wp('23%'),
@@ -199,6 +204,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     sliderContainer: {
+        backgroundColor: 'white',
         margin: 'auto',
         width: wp('90%'),
         paddingVertical: wp('5%'),
@@ -215,6 +221,7 @@ const styles = StyleSheet.create({
         fontSize: RFPercentage(2.5),
     },
     saveChangesBtn: {
+        backgroundColor: 'white',
         width: wp('40%'),
         alignItems: 'center',
         alignSelf: 'center',

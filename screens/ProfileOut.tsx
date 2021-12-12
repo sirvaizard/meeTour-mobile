@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { RFPercentage } from "react-native-responsive-fontsize";
@@ -8,15 +8,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import BntRectangle from '../components/BtnRectangle';
 
-import api from "../services/api";
-import { CredentialsContext } from '../components/CredentialsContext';
 import User from '../interfaces/user';
 
 const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asset/e5cf8466bc6f/sub-buzz-11718-1591678685-12.png"
 
-export default function Profile({ route, navigation }: { route: any, navigation: any }) {
+export default function ProfileOut({ route, navigation }: { route: any, navigation: any }) {
 
-    const { storedCredentials } = useContext(CredentialsContext);
     const [userInfo, setUserInfo] = useState<User>({}); 
 
     function handleEventsWent() {
@@ -24,8 +21,6 @@ export default function Profile({ route, navigation }: { route: any, navigation:
     }
 
     function loadUserInfo() {
-        console.log("--------------------------------");
-        console.log(route.params);
 
         setUserInfo(route.params.userInfo);
         
@@ -96,6 +91,7 @@ const styles = StyleSheet.create({
 
     },
     bioContainer: {
+        backgroundColor: 'white',
         width: wp('100%'),
         alignItems: 'center',
         marginBottom: 15
@@ -108,15 +104,18 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     name: {
+        color: 'black',
         fontSize: RFPercentage(3),
         fontWeight: 'bold'
     },
     bio: {
+        color: 'black',
         paddingHorizontal: wp('7%'),
         marginTop: 10,
         textAlign: 'center'
     },
     interestsContainer: {
+        backgroundColor: 'white',
         width: wp('100%'),
         padding: wp('5%')
     },
@@ -127,12 +126,14 @@ const styles = StyleSheet.create({
 
     },
     interestsBtnsContainer: {
+        backgroundColor: 'white',
         width: wp('90%'),
         marginTop: 10,
         justifyContent: 'space-evenly',
         flexDirection: 'row',
     },
     btnInterest: {
+        backgroundColor: 'white',
         alignItems: 'center',
         textAlign: 'center',
         width: wp('23%'),

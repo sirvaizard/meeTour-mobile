@@ -1,9 +1,10 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, Image, TouchableOpacity, ScrollView} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 import User from '../interfaces/user';
+import Header from '../components/Header';
 
 const avatar = "https://img.buzzfeed.com/buzzfeed-static/static/2020-06/9/4/asset/e5cf8466bc6f/sub-buzz-11718-1591678685-12.png"
 
@@ -16,15 +17,13 @@ export default function Confirmed({ route, navigation }: { route: any, navigatio
   }
 
   useFocusEffect(useCallback(() => {
-    console.log(route.params.participants);
     setParticipants(route.params.participants);
   }, []));
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.logoTitle}>Confirmados</Text>
-      </View>
+      
+      <Header title="Confirmados" />
 
       {participants.map((confirmed, index) => (
         <View key={index} style={styles.ConfirmedContainer}>
@@ -49,26 +48,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  header: {
-    height: 50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 15
-  },
   AvatarNameGroup: {
+    backgroundColor: 'white',
     flexDirection: "row",
     alignItems: "center",
   },
   ConfirmedContent: {
+    backgroundColor: 'white',
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-  },
-  logoTitle: {
-    fontSize: 26,
-    color: "#6951FF",
-    fontWeight: "bold",
   },
   image: {
     width: 48,
@@ -77,6 +66,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   ConfirmedContainer: {
+    backgroundColor: 'white',
     shadowColor: "#000",
     shadowOffset: {
       width: 3,
@@ -92,6 +82,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   ConfirmedName: {
+    color: 'black',
     fontSize: 16,
   }
 });

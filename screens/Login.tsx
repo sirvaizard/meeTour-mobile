@@ -28,6 +28,7 @@ export default function Login({ navigation }: { navigation: any }) {
 
     function persistLogin(credentials: any){
 
+        // to do: handle the errors in a better way
         AsyncStorage.setItem('meeTourCredentials', JSON.stringify(credentials))
             .then(() => {
                 setStoredCredentials(credentials);
@@ -47,7 +48,6 @@ export default function Login({ navigation }: { navigation: any }) {
             }
         )
         .then(response => {
-            console.log(response);
             persistLogin(response.data);
             navigation.navigate('BottomTabNav');
         })
@@ -207,7 +207,6 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 8,
         marginVertical: 8
-    },
-
+    }
 
 });

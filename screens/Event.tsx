@@ -16,7 +16,6 @@ import placeholderImg from '../assets/images/placeholder.jpg';
 
 
 let placeImages: ImageProps[] = [placeholderImg, placeholderImg, placeholderImg];
-let array: number[] = [1, 2, 3];
 
 export default function Event({ route, navigation }: { route: any, navigation: any }) {
 
@@ -24,6 +23,8 @@ export default function Event({ route, navigation }: { route: any, navigation: a
     const { storedCredentials } = useContext(CredentialsContext);
 
     async function handleConfirmBtn(id: number) {
+
+        //to do: check if the user isn't already confirmed in the selected event
 
         await api.post(`/event/${id}/join`, {},
             {
@@ -33,7 +34,7 @@ export default function Event({ route, navigation }: { route: any, navigation: a
             })
             .then(() => navigation.navigate('Agenda'))
             .catch(err => {
-                console.warn(err);
+                console.log(err);
             })
     }
 
@@ -46,7 +47,7 @@ export default function Event({ route, navigation }: { route: any, navigation: a
     }
 
     function handleSeeAllImages() {
-        // console.log("Show all instagram images");
+        // to do: load the instagram images from the instagram api
     }
 
     return (
@@ -65,7 +66,7 @@ export default function Event({ route, navigation }: { route: any, navigation: a
 
             <View style={styles.descriptionContainer}>
                 <Text style={styles.descriptionTitle}>Descrição do Evento</Text>
-                <Text>{event.description}</Text>
+                <Text style={styles.descriptionText}>{event.description}</Text>
             </View>
 
             <View style={styles.placeImagesSection}>
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     descriptionContainer: {
+        backgroundColor: 'white',
         display: 'flex',
         marginHorizontal: wp('6%'),
         marginVertical: hp('2%'),
@@ -130,7 +132,11 @@ const styles = StyleSheet.create({
         fontSize: RFPercentage(3),
         marginBottom: 3
     },
+    descriptionText: {
+        color: 'black'
+    },
     placeImagesSection: {
+        backgroundColor: '#fff',
         display: 'flex',
         marginHorizontal: 10,
         marginVertical: 15,
@@ -163,6 +169,7 @@ const styles = StyleSheet.create({
         color: '#6951FF'
     },
     placeImagesContainer: {
+        backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -175,6 +182,7 @@ const styles = StyleSheet.create({
         margin: wp('.8%')
     },
     buttonsContainer: {
+        backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',

@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
-import * as React from 'react';
+import React from 'react';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         paddingVertical: hp('2.5%'),
         paddingHorizontal: wp('5%'),
 
+        backgroundColor: 'white',
         borderColor: '#6868683d',
         borderBottomWidth: 3,
         borderLeftWidth: 3,
@@ -31,12 +32,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     confirmedPeopleBtnTextContainer: {
+        backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         fontSize: RFPercentage(2)
     },
+    confirmedPeopleBtnText: {
+        color: 'black'
+    }
 });
 
 export default function BntRectangle({ route, number, text, callback}: {route: any, number: number, text: string, callback: () => void}) {
@@ -46,7 +51,7 @@ export default function BntRectangle({ route, number, text, callback}: {route: a
            <TouchableOpacity style={styles.confirmedPeopleBtn} onPress={callback}>
                 <Text style={styles.confirmedPeopleBtnNumber}>{number}</Text>
                 <View style={styles.confirmedPeopleBtnTextContainer} >
-                    <Text>{text}</Text>
+                    <Text style={styles.confirmedPeopleBtnText}>{text}</Text>
                     <Ionicons name="arrow-forward" size={25} color="black" />
                 </View>
             </TouchableOpacity>

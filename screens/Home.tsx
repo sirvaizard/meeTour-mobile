@@ -32,9 +32,7 @@ export default function Home(props: any) {
 
     useEffect(() => {
 
-        console.log("--------------------------------#");
-        console.log(storedCredentials.token);
-
+        // to do: handle the errors in a better way
         if(storedCredentials){
             api.get(`/event?latitude=10&longitude=10&radius=10`,
                 {
@@ -100,9 +98,11 @@ const styles = StyleSheet.create({
         bottom: hp('12%'),
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor: '#fff'
     },
     button: {
+        backgroundColor: '#fff',
         borderColor: '#6868683d',
         borderBottomWidth: 3,
         borderTopWidth: 0,
