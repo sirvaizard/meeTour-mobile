@@ -280,14 +280,10 @@ const styles = StyleSheet.create({
         marginTop: hp('5%'),
         borderRadius: 4,
 
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 3,
-            height: 5,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 3.84,
-        elevation: .75,
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderTopWidth: 0,
+        borderRightWidth: 3
     },
     btnVoltarLabel: {
         color: '#353535',
@@ -305,14 +301,11 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: 'white',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 3,
-            height: 5,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 3.84,
-        elevation: 2,
+
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderTopWidth: 0,
+        borderRightWidth: 3,
 
         height: 40,
         padding: 10,
@@ -320,7 +313,7 @@ const styles = StyleSheet.create({
         marginVertical: 8
     },
     inputMultiLine: {
-        height: 100,
+        height: 80,
     },
 
 

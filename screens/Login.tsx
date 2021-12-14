@@ -173,14 +173,10 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 4,
 
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 3,
-            height: 5,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 3.84,
-        elevation: 1,
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderTopWidth: 0,
+        borderRightWidth: 3
     },
     buttonText: {
         color: 'white',
@@ -195,14 +191,12 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: 'white',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 3,
-            height: 5,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 3.84,
-        elevation: 1,
+        
+        borderColor: '#6868683d',
+        borderBottomWidth: 3,
+        borderTopWidth: 0,
+        borderRightWidth: 3,
+        
         height: 40,
         padding: 10,
         borderRadius: 8,
